@@ -13,7 +13,7 @@ public class MainMenu {
             System.out.println("4. Delete Book");
             System.out.println("5. Search Title");
             System.out.println("6. Search Author");
-            System.out.println("7. Serch Genre");
+            System.out.println("7. Search Genre");
             System.out.println("0. Exit");
 
            
@@ -31,13 +31,13 @@ public class MainMenu {
         } else if (opcion == 3) {
             System.out.println("Edditing Book...");
         }else if (opcion == 4 ) {
-            System.out.println("...");
+            System.out.println("Deleting Book");
         }else if (opcion == 5 ) {
-            System.out.println("...");
+            System.out.println("Searching Tittle");
         }else if (opcion == 6) {
-            System.out.println("...");
+            System.out.println("Searching Author");
         }else if (opcion == 7) {
-            System.out.println("...");
+            System.out.println("Searching Genre");
         }else if (opcion == 0) {
             System.out.println("Exit...");
         } else {
