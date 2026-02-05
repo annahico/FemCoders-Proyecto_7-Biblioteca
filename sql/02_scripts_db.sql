@@ -2,20 +2,20 @@
 -- INSERTAR AUTORES (12 autores)
 -- ================================================
 INSERT INTO authors
-    (first_name, last_name)
+    (full_name)
 VALUES
-    ('SenLin', 'Yu'),
-    ('Leigh', 'Bardugo'),
-    ('Kerri', 'Maniscalco'),
-    ('Patrick', 'Rothfuss'),
-    ('Rainbow', 'Rowell'),
-    ('Katherine', 'Neville'),
-    ('Antoine', 'de Saint-Exupery'),
-    ('Franz', 'Kafka'),
-    ('Paulo', 'Coelho'),
-    ('Charlotte', 'Bronte'),
-    ('J.K.', 'Rowling'),
-    ('Michelle', 'Zauner');
+    ('SenLin Yu'),
+    ('Leigh Bardugo'),
+    ('Kerri Maniscalco'),
+    ('Patrick Rothfuss'),
+    ('Rainbow Rowell'),
+    ('Katherine Neville'),
+    ('Antoine de Saint-Exupery'),
+    ('Franz Kafka'),
+    ('Paulo Coelho'),
+    ('Charlotte Bronte'),
+    ('J.K. Rowling'),
+    ('Michelle Zauner');
 
 
 -- ================================================
@@ -133,62 +133,62 @@ VALUES
         FROM books
         WHERE isbn = '978-0-000-00001-0'), (SELECT id
         FROM authors
-        WHERE last_name = 'Yu')),
+        WHERE full_name = 'SenLin Yu')),
     ((SELECT id
         FROM books
         WHERE isbn = '978-0-451-65790-5'), (SELECT id
         FROM authors
-        WHERE last_name = 'Bardugo')),
+        WHERE full_name = 'Leigh Bardugo')),
     ((SELECT id
         FROM books
         WHERE isbn = '978-0-000-00003-0'), (SELECT id
         FROM authors
-        WHERE last_name = 'Maniscalco')),
+        WHERE full_name = 'Kerri Maniscalco')),
     ((SELECT id
         FROM books
         WHERE isbn = '978-0-000-00004-0'), (SELECT id
         FROM authors
-        WHERE last_name = 'Rothfuss')),
+        WHERE full_name = 'Patrick Rothfuss')),
     ((SELECT id
         FROM books
         WHERE isbn = '978-1-250-05552-0'), (SELECT id
         FROM authors
-        WHERE last_name = 'Rowell')),
+        WHERE full_name = 'Rainbow Rowell')),
     ((SELECT id
         FROM books
         WHERE isbn = '978-0-000-00006-0'), (SELECT id
         FROM authors
-        WHERE last_name = 'Neville')),
+        WHERE full_name = 'Katherine Neville')),
     ((SELECT id
         FROM books
         WHERE isbn = '978-0-465-06959-7'), (SELECT id
         FROM authors
-        WHERE last_name = 'de Saint-Exupery')),
+        WHERE full_name = 'Antoine de Saint-Exupery')),
     ((SELECT id
         FROM books
         WHERE isbn = '978-0-000-00008-0'), (SELECT id
         FROM authors
-        WHERE last_name = 'Kafka')),
+        WHERE full_name = 'Franz Kafka')),
     ((SELECT id
         FROM books
         WHERE isbn = '978-0-062-31609-7'), (SELECT id
         FROM authors
-        WHERE last_name = 'Coelho')),
+        WHERE full_name = 'Paulo Coelho')),
     ((SELECT id
         FROM books
         WHERE isbn = '978-0-141-24081-5'), (SELECT id
         FROM authors
-        WHERE last_name = 'Bronte')),
+        WHERE full_name = 'Charlotte Bronte')),
     ((SELECT id
         FROM books
         WHERE isbn = '978-0-439-70818-8'), (SELECT id
         FROM authors
-        WHERE last_name = 'Rowling')),
+        WHERE full_name = 'J.K. Rowling')),
     ((SELECT id
         FROM books
         WHERE isbn = '978-0-525-55918-4'), (SELECT id
         FROM authors
-        WHERE last_name = 'Zauner'));
+        WHERE full_name = 'Michelle Zauner'));
 
 
 -- ================================================
