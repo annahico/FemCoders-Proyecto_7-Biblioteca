@@ -16,9 +16,7 @@ public class MainMenu {
             System.out.println("7. Search Genre");
             System.out.println("0. Exit");
 
-           
             // option = ConsoleUtils.userOption("Select: ");
-
             selected(option);
         }
     }
@@ -30,15 +28,15 @@ public class MainMenu {
             System.out.println("Adding Book...");
         } else if (opcion == 3) {
             System.out.println("Edditing Book...");
-        }else if (opcion == 4 ) {
+        } else if (opcion == 4) {
             System.out.println("Deleting Book");
-        }else if (opcion == 5 ) {
+        } else if (opcion == 5) {
             System.out.println("Searching Tittle");
-        }else if (opcion == 6) {
+        } else if (opcion == 6) {
             System.out.println("Searching Author");
-        }else if (opcion == 7) {
+        } else if (opcion == 7) {
             System.out.println("Searching Genre");
-        }else if (opcion == 0) {
+        } else if (opcion == 0) {
             System.out.println("Exit...");
         } else {
             System.out.println("Invalid Option.");
