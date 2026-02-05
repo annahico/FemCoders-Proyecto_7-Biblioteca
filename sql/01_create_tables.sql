@@ -10,8 +10,7 @@
 CREATE TABLE authors
 (
     id SERIAL PRIMARY KEY,
-    first_name VARCHAR(150) NOT NULL,
-    last_name VARCHAR(150) NOT NULL
+    full_name VARCHAR(300) NOT NULL
 );
 
 -- ================================================
