@@ -8,7 +8,7 @@ SELECT
     b.title,
     b.isbn,
     a.full_name AS author,
-    STRING_AGG(DISTINCT g.name, ', ') AS genres
+    STRING_AGG(g.name, ', ') AS genres
 FROM books b
 LEFT JOIN books_authors ba ON b.id = ba.book_id
 LEFT JOIN authors a ON a.id = ba.author_id
@@ -74,7 +74,7 @@ SELECT DISTINCT
     b.title,
     b.isbn,
     a.full_name AS author,
-    STRING_AGG(DISTINCT g.name, ', ') AS genres
+    STRING_AGG(g.name, ', ') AS genres
 FROM books b
 LEFT JOIN books_authors ba ON b.id = ba.book_id
 LEFT JOIN authors a ON a.id = ba.author_id
