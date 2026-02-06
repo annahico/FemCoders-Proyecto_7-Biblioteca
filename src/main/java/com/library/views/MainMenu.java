@@ -2,7 +2,10 @@ package com.library.views;
 
 import java.util.Random;
 
+import com.library.model.Book;
+
 public class MainMenu {
+    private BookView bookView = new BookView();
 
     public void show() {
 
@@ -49,15 +52,36 @@ public class MainMenu {
     private void selected(int opcion) {
         switch (opcion) {
             case 1 -> System.out.println("Listing all books...");
-            case 2 -> System.out.println("Adding a new book...");
+            case 2 -> {
+
+                Book newBook = bookView.getNewBookData();
+
+                System.out.println("\n\u001B[32m--- PRUEBA ---");
+                System.out.println("Título: " + newBook.getTitle());
+                System.out.println("ISBN: " + newBook.getIsbn());
+                System.out.println("Descripción: " + newBook.getDescription());
+                System.out.println("------------------------------\u001B[0m");
+
+                System.out.println("✔ Objeto listo para enviar al Controller.");
+            }
             case 3 -> System.out.println("Editing a book...");
             case 4 -> System.out.println("Deleting a book...");
-            case 5 -> System.out.println("Searching by Title...");
-            case 6 -> System.out.println("Searching by Author...");
-            case 7 -> System.out.println("Searching by Genre...");
+            case 5 -> {
+                String title = ConsoleUtils.stringInput("Enter Title to search: ", 200);
+                System.out.println("Searching for: " + title);
+            }
+            case 6 -> {
+                String author = ConsoleUtils.stringInput("Enter Author to search: ", 100);
+                System.out.println("Searching for books by: " + author);
+            }
+            case 7 -> {
+                String genre = ConsoleUtils.stringInput("Enter Genre to search: ", 50);
+                System.out.println("Filtering by: " + genre);
+            }
             case 0 -> System.out.println("Exiting the system... Goodbye!");
             default -> System.out.println("Invalid Option. Please try again.");
-        };
+        }
+        ;
     }
 
 }
