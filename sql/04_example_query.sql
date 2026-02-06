@@ -117,7 +117,7 @@ GROUP BY b.id, b.title, b.isbn, b.description, b.created_at, b.updated_at, a.ful
 -- QUERY 6: AÑADIR UN NUEVO LIBRO (PASO 1 - Insertar libro)
 -- ================================================
 INSERT INTO books (title, isbn, description)
-VALUES ('Nuevo Libro', '978-0-000-99999-9', 'Descripción del libro')
+VALUES ('New Book', '978-0-000-99999-9', 'Book description')
 RETURNING id;  -- Devuelve el ID del libro recién creado
 
 
@@ -125,11 +125,11 @@ RETURNING id;  -- Devuelve el ID del libro recién creado
 -- QUERY 7: AÑADIR UN NUEVO AUTOR (si no existe)
 -- ================================================
 -- Primero verificar si el autor ya existe:
-SELECT id FROM authors WHERE full_name = 'Nombre Completo';
+SELECT id FROM authors WHERE full_name = 'Full Name';
 
 -- Si NO existe, insertarlo:
 INSERT INTO authors (full_name)
-VALUES ('Nombre Completo')
+VALUES ('Full Name')
 RETURNING id;
 
 
@@ -145,11 +145,11 @@ VALUES (13, 1);  -- book_id = ID del nuevo libro, author_id = ID del autor
 -- QUERY 9: AÑADIR GÉNERO (si no existe)
 -- ================================================
 -- Primero verificar si el género ya existe:
-SELECT id FROM genres WHERE name = 'Nombre del Género';
+SELECT id FROM genres WHERE name = 'Genre Name';
 
 -- Si NO existe, insertarlo:
 INSERT INTO genres (name)
-VALUES ('Nombre del Género')
+VALUES ('Genre Name')
 RETURNING id;
 
 
@@ -166,9 +166,9 @@ VALUES (13, 1);  -- book_id = ID del libro, genre_id = ID del género
 -- ================================================
 UPDATE books
 SET
-    title = 'Título Actualizado',
+    title = 'Updated Title',
     isbn = '978-0-000-88888-8',
-    description = 'Nueva descripción',
+    description = 'New description',
     updated_at = CURRENT_TIMESTAMP
 WHERE id = 1;
 
