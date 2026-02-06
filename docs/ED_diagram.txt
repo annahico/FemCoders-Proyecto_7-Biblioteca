@@ -1,0 +1,40 @@
+dbdiagram.io
+
+Table authors {
+  id integer [primary key]
+  full_name varchar(300) [not null]
+}
+
+Table books {
+  id integer [primary key]
+  title varchar(255) [not null]
+  isbn varchar(17) [unique]
+  description varchar(200)
+  created_at timestamp [default: `now()`]
+  updated_at timestamp [default: `now()`]
+}
+
+Table genres {
+  id integer [primary key]
+  name varchar(100) [not null, unique]
+}
+
+Table books_authors {
+  book_id integer
+  author_id integer
+  
+  primary key (book_id, author_id)
+}
+
+Table books_genres {
+  book_id integer
+  genre_id integer
+  
+  primary key (book_id, genre_id)
+}
+
+Ref: books_authors.book_id > books.id [delete: cascade]
+Ref: books_authors.author_id > authors.id [delete: cascade]
+
+Ref: books_genres.book_id > books.id [delete: cascade]
+Ref: books_genres.genre_id > genres.id [delete: cascade]

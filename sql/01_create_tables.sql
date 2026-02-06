@@ -10,8 +10,7 @@
 CREATE TABLE authors
 (
     id SERIAL PRIMARY KEY,
-    first_name VARCHAR(150) NOT NULL,
-    last_name VARCHAR(150) NOT NULL
+    full_name VARCHAR(300) NOT NULL
 );
 
 -- ================================================
@@ -24,7 +23,6 @@ CREATE TABLE books
     title VARCHAR(255) NOT NULL,
     isbn VARCHAR(17) UNIQUE,
     description VARCHAR(200),
-    publication_date DATE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
