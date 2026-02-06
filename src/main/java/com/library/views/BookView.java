@@ -34,7 +34,6 @@ public class BookView {
         }
     }
 
-   
     public void printBookFullDetails(Book book) {
         System.out.println("---------------------------------------");
         System.out.println("Title: " + book.getTitle());
@@ -43,4 +42,20 @@ public class BookView {
         // System.out.println("Genre: " + book.getGenre());
         System.out.println("Description: " + book.getDescription());
     }
+
+    public Book getNewBookData() {
+    System.out.println("\n\u001B[32m--- ADDING NEW BOOK ---\u001B[0m");
+    
+    String title = ConsoleUtils.stringInput("Title: ", 200);
+    // String author = ConsoleUtils.stringInput("Author: ", 100);
+    String isbn = ConsoleUtils.stringInput("ISBN: ", 20);
+    // String genre = ConsoleUtils.stringInput("Genre: ", 50);
+    String description = ConsoleUtils.stringInput("Description: ", 200);
+    return Book.builder()
+               .title(title)
+               .isbn(isbn)
+               .description(description)
+    
+               .build();
+}
 }
