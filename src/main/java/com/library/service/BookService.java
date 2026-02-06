@@ -1,6 +1,9 @@
 package com.library.service;
 
-public class BookService {
+import java.util.List;
+import com.library.model.Book;
+
+public interface BookService {
     void createBook(Book book);
     void updateBook(Book book);
     void deleteBook(String isbn);
