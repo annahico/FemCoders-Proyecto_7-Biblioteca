@@ -6,8 +6,6 @@ public interface BookRepository {
 
     public void createBook(Book book);
 
-    public Book getBook(Book book);
-
     public Book getBookbyId (int id);
 
     public Book getBookbyTitle(String title);

@@ -1,9 +1,12 @@
 package com.library.model;
 
+import java.util.List;
+
 public class Author {
 
 private int id;
 private String fullName;
+private List <Book> books;
 
  //Constructores
     public Author() {
