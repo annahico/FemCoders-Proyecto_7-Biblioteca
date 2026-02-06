@@ -1,4 +1,4 @@
-package main.java.com.library.config;
+package com.library.config;
 
 public class DatabaseConnection {
     
