@@ -57,7 +57,7 @@ public class MainMenu {
             case 7 -> System.out.println("Searching by Genre...");
             case 0 -> System.out.println("Exiting the system... Goodbye!");
             default -> System.out.println("Invalid Option. Please try again.");
-        }
+        };
     }
 
 }
