@@ -28,7 +28,6 @@ SELECT
     b.title,
     b.isbn,
     b.description,
-    b.publication_date,
     a.full_name AS author,
     STRING_AGG(DISTINCT g.name, ', ') AS genres
 FROM books b
@@ -37,7 +36,7 @@ LEFT JOIN authors a ON a.id = ba.author_id
 LEFT JOIN books_genres bg ON b.id = bg.book_id
 LEFT JOIN genres g ON g.id = bg.genre_id
 WHERE b.title ILIKE '%cuervos%'  -- Reemplazar 'cuervos' con el parámetro de búsqueda
-GROUP BY b.id, b.title, b.isbn, b.description, b.publication_date, a.full_name
+GROUP BY b.id, b.title, b.isbn, b.description, a.full_name
 ORDER BY b.title;
 
 
@@ -51,7 +50,6 @@ SELECT
     b.title,
     b.isbn,
     b.description,
-    b.publication_date,
     a.full_name AS author,
     STRING_AGG(DISTINCT g.name, ', ') AS genres
 FROM books b
@@ -60,7 +58,7 @@ JOIN authors a ON a.id = ba.author_id
 LEFT JOIN books_genres bg ON b.id = bg.book_id
 LEFT JOIN genres g ON g.id = bg.genre_id
 WHERE a.full_name ILIKE '%leigh%'  -- Reemplazar 'leigh' con el parámetro de búsqueda
-GROUP BY b.id, b.title, b.isbn, b.description, b.publication_date, a.full_name
+GROUP BY b.id, b.title, b.isbn, b.description, a.full_name
 ORDER BY b.title;
 
 
@@ -102,7 +100,6 @@ SELECT
     b.title,
     b.isbn,
     b.description,
-    b.publication_date,
     b.created_at,
     b.updated_at,
     a.full_name AS author,
@@ -113,14 +110,14 @@ LEFT JOIN authors a ON a.id = ba.author_id
 LEFT JOIN books_genres bg ON b.id = bg.book_id
 LEFT JOIN genres g ON g.id = bg.genre_id
 WHERE b.id = 1  -- Reemplazar 1 con el parámetro de búsqueda
-GROUP BY b.id, b.title, b.isbn, b.description, b.publication_date, b.created_at, b.updated_at, a.full_name;
+GROUP BY b.id, b.title, b.isbn, b.description, b.created_at, b.updated_at, a.full_name;
 
 
 -- ================================================
 -- QUERY 6: AÑADIR UN NUEVO LIBRO (PASO 1 - Insertar libro)
 -- ================================================
-INSERT INTO books (title, isbn, description, publication_date)
-VALUES ('Nuevo Libro', '978-0-000-99999-9', 'Descripción del libro', '2024-01-01')
+INSERT INTO books (title, isbn, description)
+VALUES ('Nuevo Libro', '978-0-000-99999-9', 'Descripción del libro')
 RETURNING id;  -- Devuelve el ID del libro recién creado
 
 
@@ -172,7 +169,6 @@ SET
     title = 'Título Actualizado',
     isbn = '978-0-000-88888-8',
     description = 'Nueva descripción',
-    publication_date = '2025-01-01',
     updated_at = CURRENT_TIMESTAMP
 WHERE id = 1;
 
