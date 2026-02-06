@@ -1,7 +1,5 @@
 package com.library.repository;
 
-import java.time.LocalDate;
-
 import com.library.model.Book;
 
 public interface BookRepository {

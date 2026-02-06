@@ -14,7 +14,6 @@ public static void main(String [] args){
         System.out.println(e.getMessage());
         e.printStackTrace();
     }
-
     MainMenu menu = new MainMenu();
     menu.show();
 }
