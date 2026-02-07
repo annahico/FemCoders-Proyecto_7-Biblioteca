@@ -3,6 +3,7 @@ package com.library.views;
 import java.util.Random;
 
 import com.library.model.Book;
+import com.library.service.BookServiceImpl;
 
 public class MainMenu {
     private BookView bookView = new BookView();
@@ -63,7 +64,9 @@ public class MainMenu {
                 System.out.println("Descripción: " + newBook.getDescription());
                 System.out.println("------------------------------\u001B[0m");
 
-                System.out.println("✔ Objeto listo para enviar al Controller.");
+                System.out.println("Objeto listo para enviar al Controller.");
+                BookServiceImpl service = new BookServiceImpl();
+                service.createBook(newBook);
             }
             case 3 -> System.out.println("Editing a book...");
             case 4 -> System.out.println("Deleting a book...");

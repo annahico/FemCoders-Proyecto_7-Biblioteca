@@ -2,19 +2,25 @@ package com.library.service;
 import java.util.List;
 import com.library.model.Book;
 import com.library.repository.BookRepository;
+import com.library.repository.BookRepositoryImpl;
 import com.library.service.BookService;
 
 public class BookServiceImpl implements BookService {
-    private final BookRepositoryImpl repository;
-
-    public BookServiceImpl(BookRepositoryImpl repository){
-        this.repository = repository;
-    }
+    private final BookRepository bookRepository = new BookRepositoryImpl();
 
     @Override
     public void createBook(Book book){
-        validateBook(book);
-        repository.createBook(book);
+        //existe el autor? si no, lo crea (y si es que sí, recupera el id)
+        //existe el genero? sino, lo crea (y si es que sí, recupera el id)
+        ///existe el libro?
+        // crea libro
+        //CREA ENLACE A TABLAS SECUNDARIAS
+
+
+        
+        bookRepository.createBook(book);
+        bookRepository.saveBookAuthors(book);
+        bookRepository.saveBookGenres(book);
     }
 
     private void validateBook(Book book){
@@ -33,23 +39,31 @@ public class BookServiceImpl implements BookService {
         if (book.getAuthors() == null || book.getAuthors().isEmpty()){
             throw new IllegalArgumentException("It must have at least one author");
         }
-        if (book.getGender() == null || book.getGender().isEmpty()){
+        if (book.getGenres() == null || book.getGenres().isEmpty()){
             throw new IllegalArgumentException("You must have at least one gender");
         }
     }
-
+}
+/* 
     @Override
     public void updateBook(Book book){
+
+        //valorar que el libro exista
+        //valorar que el autor exista
+        //valorar que el género exista
+        //si cambia autor o género, se tiene que actualizar lastablas intermedias, eliminando y creando de nuevo la relacion
+            //deleteBookGenres
+            //saveBookGenres
         validateBook(book);
-        if(!repository.existsByIsbn(book.getIsbn())){
+        if(!bookRepository.existsByIsbn(book.getIsbn())){
             throw new IllegalArgumentException("There is no book with that ISBN");     
         }
-        repository.update(book);
+        bookRepository.update(book);
     }
 
     @Override
     public List<Book> getAllBooks(){
-        return repository.searchAllBooks();
+        return bookRepository.searchAllBooks();
     }
 
     @Override
@@ -57,7 +71,7 @@ public class BookServiceImpl implements BookService {
         if (title == null || title.isBlank()){
             throw new IllegalArgumentException("A title is required");
         }
-        return repository.searchByTitle(title);
+        return bookRepository.searchByTitle(title);
     }
 
     @Override
@@ -65,7 +79,7 @@ public class BookServiceImpl implements BookService {
         if (author == null || author.isBlank()){
             throw new IllegalArgumentException("A author is required");
         }
-        return repository.searchByAuthor(author);
+        return bookRepository.searchByAuthor(author);
     }
 
     @Override
@@ -73,7 +87,7 @@ public class BookServiceImpl implements BookService {
         if (genre == null || genre.isBlank()){
             throw new IllegalArgumentException("A author is required");
         }
-        return repository.searchByGenre(genre);
+        return bookRepository.searchByGenre(genre);
     }
 
     @Override
@@ -82,10 +96,10 @@ public class BookServiceImpl implements BookService {
         throw new IllegalArgumentException("Invalid Id");
         }
 
-        if (!repository.existsByIsbn(id)) {
+        if (!bookRepository.existsByIsbn(id)) {
             throw new IllegalArgumentException("There is no book with that Id");
         }
-        repository.deleteById(id);
+        bookRepository.deleteById(id);
     }
-}
+}*/
 
