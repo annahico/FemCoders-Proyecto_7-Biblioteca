@@ -13,6 +13,7 @@ This project is a Library Inventory Management System built using the **MVC**
 (Model-View-Controller) architecture. It is designed to manage books, authors, and genres, ensuring data persistence through a relational database.
 
 **Project Status:** In Progress (Book listing functionality successfully connected to DB).
+                    Add book option 
 
 ### Screenshot
 
@@ -32,7 +33,7 @@ Follow these steps to set up the local environment and run the application:
 
 https://github.com/annahico/FemCoders-Proyecto_6-Biblioteca.git
 
-cd library-inventory $ # Compile and install dependencies $ mvn clean install
+cd library $ # Compile and install dependencies $ mvn clean install
  $ # Run the application $ mvn exec:java -Dexec.mainClass="com.library.model.App"
  
  Side information: To use the application in a special environment use ```DBManager``` to configure your database credentials.
@@ -62,4 +63,4 @@ The connection is managed through the *DBManager* class and handled within the *
 
 4. **Book Table Structure**
 
-|:--------------|:-------------:|--------------:|
+|:-ID-|:---TITLE---:|---ISBN -:| --DESCRIPTION--:|:--AUTHORS-----|:--GENRE-----|:--CREATEDATE-----|:-CREATEUPDATE--|
