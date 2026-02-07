@@ -6,16 +6,26 @@ public class ConsoleUtils {
     private static Scanner scanner = new Scanner(System.in);
 
     public static int userOption(String prompt) {
-        System.out.println(prompt);
+        System.out.print(prompt); 
         while (!scanner.hasNextInt()) {
-            System.out.println("Please, Select a number from 1 to 7 ");
-            System.out.println(prompt);
+            System.out.println("\u001B[31m Invalid input. Please enter a number.\u001B[0m");
+            System.out.print(prompt);
             scanner.next();
         }
         int numberSelected = scanner.nextInt();
-        scanner.nextLine();
+        scanner.nextLine(); 
         return numberSelected;
+    }
 
+    public static int readInt(String prompt, int min, int max) {
+        int number;
+        while (true) {
+            number = userOption(prompt);
+            if (number >= min && number <= max) {
+                return number;
+            }
+            System.out.println("\u001B[31m Error: Number must be between " + min + " and " + max + ".\u001B[0m");
+        }
     }
 
     public static String stringInput(String prompt, int maxLength) {
