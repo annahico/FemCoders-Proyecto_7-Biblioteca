@@ -77,7 +77,7 @@ public class BookView {
 
     public Integer askForBookId(String action) {
         System.out.println("\n--- " + action.toUpperCase() + " LIBRO ---");
-        // Usamos ConsoleUtils para asegurarnos de que sea un número válido
+        // nos aseguramos de que sea un número válido
         int id = ConsoleUtils.readInt("Introduce el ID del libro: ", 1, 9999);
 
         return id;
