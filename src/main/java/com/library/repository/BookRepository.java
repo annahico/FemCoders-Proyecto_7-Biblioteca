@@ -4,16 +4,25 @@ import com.library.model.Book;
 
 public interface BookRepository {
 
-    public void createBook(Book book);
+    void createBook(Book book);
 
-    public Book getBookbyId (int id);
+    void saveBookAuthors (Book book);
 
-    public Book getBookbyTitle(String title);
+    void saveBookGenres(Book book);
 
-    public Book getBookByIsbn(String isbn);
+    Book getBookbyId (int id);
 
-    public void updateBook(Book book);
+    Book getBookbyTitle(String title);
 
-    public void deleteBook(int id);
+    Book getBookByIsbn(String isbn);
+
+    void updateBook(Book book);
+
+    void deleteBook(int id);
+
+    void deleteBookAuthors (int bookId);
+
+    void deleteBookGenres (int bookId); 
 
 }
+//Faltan los select....
