@@ -1,5 +1,6 @@
 package com.library.views;
 
+import java.util.List;
 import java.util.Random;
 
 import com.library.model.Book;
@@ -7,6 +8,7 @@ import com.library.service.BookServiceImpl;
 
 public class MainMenu {
     private BookView bookView = new BookView();
+    private BookServiceImpl service = new BookServiceImpl();
 
     public void show() {
 
@@ -41,7 +43,7 @@ public class MainMenu {
             System.out.println("  4. Delete Book        0. Exit");
             System.out.println("\u001B[34m===========================================\u001B[0m");
 
-            option = ConsoleUtils.userOption("Please Select an option: ");
+            option = ConsoleUtils.readInt("Please Select an option: ", 0, 7);
 
             selected(option);
 
@@ -52,35 +54,56 @@ public class MainMenu {
 
     private void selected(int opcion) {
         switch (opcion) {
-            case 1 -> System.out.println("Listing all books...");
+            case 1 -> {
+                System.out.println("Listing all books...");
+               // List<Book> allBooks = service.getAllBooks();
+                //bookView.displayBooksBrief(allBooks);
+
+            }
             case 2 -> {
 
                 Book newBook = bookView.getNewBookData();
-
-                System.out.println("\n\u001B[32m--- PRUEBA ---");
-                System.out.println("Título: " + newBook.getTitle());
-                System.out.println("ISBN: " + newBook.getIsbn());
-                System.out.println("Descripción: " + newBook.getDescription());
-                System.out.println("------------------------------\u001B[0m");
-
-                System.out.println("Objeto listo para enviar al Controller.");
-                BookServiceImpl service = new BookServiceImpl();
                 service.createBook(newBook);
+
+                System.out.println("Book saved successfully!");
+
             }
-            case 3 -> System.out.println("Editing a book...");
-            case 4 -> System.out.println("Deleting a book...");
+            case 3 -> {
+                int id = bookView.askForBookId("Edit");
+                // Book BookToEdit = service.findById(id);
+
+                // if (BookToEdit != null) {
+                //     Book updatedBook = bookView.getEditBookData(BookToEdit);
+                //     service.updatedBook(updatedBook);
+                //     System.out.println("Book updated successfully!");
+                // } else {
+                //     System.out.println("Book not found with ID: " + id);
+                // }
+
+                System.out.println("Editing logic ready, waiting for service.findById()");
+            }
+            case 4 -> {
+                int id = bookView.askForBookId("Delete");
+                System.out.println("Processing deletion for ID: " + id);
+            }
+
             case 5 -> {
                 String title = ConsoleUtils.stringInput("Enter Title to search: ", 200);
-                System.out.println("Searching for: " + title);
+                // List<Book> results = service.findByTitle(title);
+                // bookView.searchBooks(results);
             }
             case 6 -> {
                 String author = ConsoleUtils.stringInput("Enter Author to search: ", 100);
+                //List<Book> results = service.findByAuthor(author);
+                //bookView.searchBooks(results);
                 System.out.println("Searching for books by: " + author);
             }
             case 7 -> {
                 String genre = ConsoleUtils.stringInput("Enter Genre to search: ", 50);
-                System.out.println("Filtering by: " + genre);
+                // List<Book> results = service.findByGenre(genre);
+                // bookView.displayBooksByGenre(results);
             }
+
             case 0 -> System.out.println("Exiting the system... Goodbye!");
             default -> System.out.println("Invalid Option. Please try again.");
         }
