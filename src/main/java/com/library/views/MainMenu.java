@@ -4,11 +4,15 @@ import java.util.List;
 import java.util.Random;
 
 import com.library.model.Book;
-import com.library.service.BookServiceImpl;
+import com.library.controller.BookController;
 
 public class MainMenu {
     private BookView bookView = new BookView();
-    private BookServiceImpl service = new BookServiceImpl();
+    private BookController controller;
+
+    public MainMenu(BookController controller) {
+        this.controller = controller;
+    }
 
     public void show() {
 
@@ -56,20 +60,16 @@ public class MainMenu {
         switch (opcion) {
             case 1 -> {
                 System.out.println("Listing all books...");
-               // List<Book> allBooks = service.getAllBooks();
-                //bookView.displayBooksBrief(allBooks);
-
+                List<Book> allBooks = controller.getAllBooks();
+                bookView.displayAllBooks(allBooks);
             }
             case 2 -> {
-
                 Book newBook = bookView.getNewBookData();
-                service.createBook(newBook);
-
+                controller.createBook(newBook);
                 System.out.println("Book saved successfully!");
-
             }
             case 3 -> {
-                int id = bookView.askForBookId("Edit");
+                //int id = bookView.askForBookId("Edit");
                 // Book BookToEdit = service.findById(id);
 
                 // if (BookToEdit != null) {
@@ -83,12 +83,12 @@ public class MainMenu {
                 System.out.println("Editing logic ready, waiting for service.findById()");
             }
             case 4 -> {
-                int id = bookView.askForBookId("Delete");
-                System.out.println("Processing deletion for ID: " + id);
+                //int id = bookView.askForBookId("Delete");
+                //System.out.println("Processing deletion for ID: " + id);
             }
 
             case 5 -> {
-                String title = ConsoleUtils.stringInput("Enter Title to search: ", 200);
+                //String title = ConsoleUtils.stringInput("Enter Title to search: ", 200);
                 // List<Book> results = service.findByTitle(title);
                 // bookView.searchBooks(results);
             }
@@ -99,7 +99,7 @@ public class MainMenu {
                 System.out.println("Searching for books by: " + author);
             }
             case 7 -> {
-                String genre = ConsoleUtils.stringInput("Enter Genre to search: ", 50);
+                //String genre = ConsoleUtils.stringInput("Enter Genre to search: ", 50);
                 // List<Book> results = service.findByGenre(genre);
                 // bookView.displayBooksByGenre(results);
             }
@@ -107,7 +107,6 @@ public class MainMenu {
             case 0 -> System.out.println("Exiting the system... Goodbye!");
             default -> System.out.println("Invalid Option. Please try again.");
         }
-        ;
     }
 
 }
