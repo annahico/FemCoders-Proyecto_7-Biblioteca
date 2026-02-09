@@ -1,4 +1,5 @@
 package com.library.model;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,19 +9,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor 
+@NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class Genre {
-private int id;
-private String name;
-@Builder.Default
-private List <Book> books = new ArrayList<>();
+
+    private int id;
+    private String name;
+    @Builder.Default
+    private List<Book> books = new ArrayList<>();
 }
-
-
-
-
-
-    
-    

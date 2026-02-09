@@ -162,7 +162,7 @@ VALUES (13, 1);  -- book_id = ID del libro, genre_id = ID del género
 
 
 -- ================================================
--- QUERY 11: ACTUALIZAR UN LIBRO
+-- QUERY 11: ACTUALIZAR UN LIBRO VVV
 -- ================================================
 UPDATE books
 SET
