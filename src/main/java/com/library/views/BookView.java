@@ -36,15 +36,16 @@ public class BookView {
         System.out.println("\n\u001B[32m--- ADDING NEW BOOK ---\u001B[0m");
 
         String title = ConsoleUtils.stringInput("Title: ", 200);
-        // String author = ConsoleUtils.stringInput("Author: ", 100);
-        String isbn = ConsoleUtils.stringInput("ISBN: ", 20);
+        String author = ConsoleUtils.stringInput("Author: ", 100);
+        String isbn = ConsoleUtils.stringInput("ISBN: ", 17);
         // String genre = ConsoleUtils.stringInput("Genre: ", 50);
         String description = ConsoleUtils.stringInput("Description: ", 200);
         return Book.builder()
                 .title(title)
                 .isbn(isbn)
                 .description(description)
-
+                // .genres(genre)
+                .authors(author)
                 .build();
     }
 
