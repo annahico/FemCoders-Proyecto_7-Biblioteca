@@ -1,5 +1,4 @@
 package com.library.repository;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -7,7 +6,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-
 import com.library.config.DBManager;
 import com.library.model.Author;
 import com.library.model.Book;
@@ -55,7 +53,7 @@ public class BookRepositoryImpl implements BookRepository{
             throw new RuntimeException("Error to save relationships in book: " + e.getMessage());
         }
     }
-    
+
     @Override
     public void saveBookGenres(Book book){
             String sqlGenres = "INSERT INTO books_genres (book_id, genre_id) VALUES (?, ?)";
@@ -77,17 +75,15 @@ public class BookRepositoryImpl implements BookRepository{
     public List<Book> getBookList(){
        String sql = """
                  SELECT
-                    b.id,
-                    b.title,
-                    b.isbn,
-                    a.full_name AS author,
-                    STRING_AGG(g.name, ', ') AS genres
+                    b.id, b.title, b.isbn, b.description, b.created_at, b.updated_at,
+                    STRING_AGG(DISTINCT a.full_name, ', ') AS authors, 
+                    STRING_AGG(DISTINCT g.name, ', ') AS genres
                     FROM books b
                     LEFT JOIN books_authors ba ON b.id = ba.book_id
                     LEFT JOIN authors a ON a.id = ba.author_id
                     LEFT JOIN books_genres bg ON b.id = bg.book_id
                     LEFT JOIN genres g ON g.id = bg.genre_id
-                    GROUP BY b.id, b.title, b.isbn, a.full_name
+                    GROUP BY b.id
                     ORDER BY b.id;
                  """;
        List<Book> list = new ArrayList<>();
@@ -118,7 +114,7 @@ public class BookRepositoryImpl implements BookRepository{
                         LEFT JOIN books_genres bg ON b.id = bg.book_id
                         LEFT JOIN genres g ON g.id = bg.genre_id
                         WHERE b.id = ?
-                        GROUP BY b.id, b.title, b.isbn, b.description, b.created_at, b.updated_at;
+                        GROUP BY b.id;
                          """;
         Book book = null;
         try( 
@@ -150,7 +146,7 @@ public class BookRepositoryImpl implements BookRepository{
                         LEFT JOIN books_genres bg ON b.id = bg.book_id
                         LEFT JOIN genres g ON g.id = bg.genre_id
                         WHERE b.title ILIKE ?
-                        GROUP BY b.id, b.title, b.isbn, b.description;
+                        GROUP BY b.id
                         ORDER BY b.title;
                          """;
         List<Book> books = new ArrayList<>();
@@ -185,7 +181,7 @@ public class BookRepositoryImpl implements BookRepository{
                         LEFT JOIN books_genres bg ON b.id = bg.book_id
                         LEFT JOIN genres g ON g.id = bg.genre_id
                         WHERE b.isbn = ?
-                        GROUP BY b.id, b.title, b.isbn, b.description, b.created_at, b.updated_at;
+                        GROUP BY b.id;
                          """;
         Book book = null;
         try( 
@@ -209,7 +205,7 @@ public class BookRepositoryImpl implements BookRepository{
         String sql = """
                 SELECT
                 b.id, b.title, b.isbn, b.description,
-                STRING_AGG(DISTINCT a.full_name, ', ') AS author,
+                STRING_AGG(DISTINCT a.full_name, ', ') AS authors,
                 STRING_AGG(DISTINCT g.name, ', ') AS genres
                 FROM books b
                 JOIN books_authors ba ON b.id = ba.book_id
@@ -222,7 +218,7 @@ public class BookRepositoryImpl implements BookRepository{
                     JOIN authors a2 ON ba2.author_id = a2.id
                     WHERE a2.full_name ILIKE ?
                 )
-                GROUP BY b.id, b.title, b.isbn, b.description
+                GROUP BY b.id
                 ORDER BY b.title;
                 """;
         List<Book> booksByAuthor = new ArrayList<>();
@@ -247,9 +243,9 @@ public class BookRepositoryImpl implements BookRepository{
     public List<Book> getBooksByGenre(String genre){
         String sql = """
                 SELECT DISTINCT
-                b.id, b.title, b.isbn,
+                b.id, b.title, b.isbn, b.description, b.created_at, b.updated_at,
                 STRING_AGG(DISTINCT a.full_name, ', ') AS authors,
-                STRING_AGG(g.name, ', ') AS genres
+                STRING_AGG(DISTINCT g.name, ', ') AS genres
                 FROM books b
                 LEFT JOIN books_authors ba ON b.id = ba.book_id
                 LEFT JOIN authors a ON a.id = ba.author_id
@@ -264,7 +260,7 @@ public class BookRepositoryImpl implements BookRepository{
                         WHERE name ILIKE ? 
                     )
                 )
-                GROUP BY b.id, b.title, b.isbn
+                GROUP BY b.id
                 ORDER BY b.title;
                 """;
         List<Book> booksByGenre = new ArrayList<>();
@@ -361,7 +357,6 @@ public class BookRepositoryImpl implements BookRepository{
             }
     }
 
-    //método auxiliar para limpieza de código, dnd debería ir?
     private Book mapResultSetToBook(ResultSet rs) throws SQLException {
     String genreString = rs.getString("genres");
     String authorString = rs.getString("authors");
@@ -389,21 +384,3 @@ public class BookRepositoryImpl implements BookRepository{
     return book;
 }
 }
-
-
-/* estructura par la lamada: 
-public void createBook(Book book){
-
-        String sql = "";
-        try( 
-            Connection connection = DBManager.getConnection(); 
-            PreparedStatement st = connection.prepareStatement(sql)){
-
-                st.setString(,dof...)
-
-                st.executeUpdate();
-            } catch (SQLException e){
-                throw new RuntimeException("error" + e.getMessage());
-            }
-    }
- */

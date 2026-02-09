@@ -1,4 +1,5 @@
 package com.library.model;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +11,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Builder
-@NoArgsConstructor 
+@NoArgsConstructor
 @AllArgsConstructor
 
 public class Book {
@@ -27,4 +28,3 @@ public class Book {
     private LocalDateTime updatedAt;
 
 }
- 
