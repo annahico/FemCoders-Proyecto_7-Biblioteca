@@ -3,7 +3,7 @@ package com.library.views;
 import java.util.Scanner;
 
 public class ConsoleUtils {
-    private static Scanner scanner = new Scanner(System.in);
+    private static final Scanner scanner = new Scanner(System.in);
 
     public static int userOption(String prompt) {
         System.out.print(prompt); 
@@ -40,5 +40,5 @@ public class ConsoleUtils {
             System.out.println("\u001B[31m Error: Cannot be empty or exceed " + maxLength + " characters.\u001B[0m");
         }
     }
-
+    
 }

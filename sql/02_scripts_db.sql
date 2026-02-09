@@ -83,7 +83,7 @@ VALUES
 INSERT INTO books
     (title, isbn, description)
 VALUES
-    ('Carry On', '978-1-250-05552-0', 'Una reimaginación mágica de los estereotipos clásicos del fantasy');
+    ('Carry On', '978-1250049551', 'A magical reimagining of classic fantasy stereotypes');
 
 INSERT INTO books
     (title, isbn, description)
@@ -151,7 +151,7 @@ VALUES
         WHERE full_name = 'Patrick Rothfuss')),
     ((SELECT id
         FROM books
-        WHERE isbn = '978-1-250-05552-0'), (SELECT id
+        WHERE isbn = '978-1250049551'), (SELECT id
         FROM authors
         WHERE full_name = 'Rainbow Rowell')),
     ((SELECT id
@@ -281,17 +281,17 @@ INSERT INTO books_genres
 VALUES
     ((SELECT id
         FROM books
-        WHERE isbn = '978-1-250-05552-0'), (SELECT id
+        WHERE isbn = '978-1250049551'), (SELECT id
         FROM genres
         WHERE name = 'Novel')),
     ((SELECT id
         FROM books
-        WHERE isbn = '978-1-250-05552-0'), (SELECT id
+        WHERE isbn = '978-1250049551'), (SELECT id
         FROM genres
         WHERE name = 'Fantasy Literature')),
     ((SELECT id
         FROM books
-        WHERE isbn = '978-1-250-05552-0'), (SELECT id
+        WHERE isbn = '978-1250049551'), (SELECT id
         FROM genres
         WHERE name = 'Urban Fantasy'));
 
