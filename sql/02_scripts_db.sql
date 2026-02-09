@@ -151,7 +151,11 @@ VALUES
         WHERE full_name = 'Patrick Rothfuss')),
     ((SELECT id
         FROM books
+<<<<<<< HEAD
         WHERE isbn = '978-12500495510'), (SELECT id
+=======
+        WHERE isbn = '978-1250049551'), (SELECT id
+>>>>>>> 0b82fe936ab4c94132b6a0d1056eef729b8009f3
         FROM authors
         WHERE full_name = 'Rainbow Rowell')),
     ((SELECT id

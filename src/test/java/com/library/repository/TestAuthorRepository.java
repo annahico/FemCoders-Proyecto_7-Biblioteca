@@ -1,4 +1,4 @@
-package com.library.test;
+package tests.java.com.library.repository;
 
 import java.util.List;
 

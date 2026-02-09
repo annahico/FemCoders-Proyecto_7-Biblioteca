@@ -23,7 +23,7 @@ public class BookRepositoryImpl implements BookRepository {
                 Connection connection = DBManager.getConnection(); PreparedStatement st = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             st.setString(1, book.getTitle());
-            st.setString(2, book.getIsbn());
+            st.setString(2, (String) book.getIsbn());
             st.setString(3, book.getDescription());
 
             st.executeUpdate();

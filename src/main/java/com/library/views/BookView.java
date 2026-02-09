@@ -1,6 +1,7 @@
 package com.library.views;
 
 import java.util.List;
+
 import com.library.model.Book;
 
 public class BookView {
@@ -44,37 +45,39 @@ public class BookView {
                 .title(title)
                 .isbn(isbn)
                 .description(description)
-
                 .build();
     }
 
     //editar
     public Book getEditBookData(Book existingBook) {
-    System.out.println("\n--- EDITANDO: " + existingBook.getTitle() + " ---");
-    System.out.println("(press enter to not change the actual value)");
+        System.out.println("\n--- EDITANDO: " + existingBook.getTitle() + " ---");
+        System.out.println("(press enter to not change the actual value)");
 
-    
-    String title = ConsoleUtils.stringInput("New tittle [" + existingBook.getTitle() + "]: ", 200);
-   
-    if (title.isEmpty()) title = existingBook.getTitle();
+        String title = ConsoleUtils.stringInput("New tittle [" + existingBook.getTitle() + "]: ", 200);
 
-    String isbn = ConsoleUtils.stringInput("New ISBN [" + existingBook.getIsbn() + "]: ", 20);
-    if (isbn.isEmpty()) isbn = existingBook.getIsbn();
+        if (title.isEmpty()) {
+            title = existingBook.getTitle();
+        }
 
-    String description = ConsoleUtils.stringInput("New description: ", 200);
-    if (description.isEmpty()) description = existingBook.getDescription();
+        String isbn = ConsoleUtils.stringInput("New ISBN [" + existingBook.getIsbn() + "]: ", 20);
+        if (isbn.isEmpty()) {
+            isbn = existingBook.getIsbn();
+        }
 
-    
-    return Book.builder()
-            .id(existingBook.getId()) /*el ID NO CAMBIA*/
-            .title(title)
-            .isbn(isbn)
-            .description(description)
-            .build();
-}
+        String description = ConsoleUtils.stringInput("New description: ", 200);
+        if (description.isEmpty()) {
+            description = existingBook.getDescription();
+        }
+
+        return Book.builder()
+                .id(existingBook.getId()) /*el ID NO CAMBIA*/
+                .title(title)
+                .isbn(isbn)
+                .description(description)
+                .build();
+    }
 
     // pregunytar id para eliminar
-
     public Integer askForBookId(String action) {
         System.out.println("\n--- " + action.toUpperCase() + " LIBRO ---");
         // nos aseguramos de que sea un número válido
@@ -84,15 +87,13 @@ public class BookView {
     }
 
     public boolean confirmDeletion(String bookTitle) {
-    System.out.println("\nWARNING!");
-    System.out.println("Are you sure you want to delete the book: \"" + bookTitle + "\"?");
-    
-   
-    String response = ConsoleUtils.stringInput("Type 'Y' to confirm or any other key to cancel: ", 1);
-    
-    
-    return response.equalsIgnoreCase("Y");
-}
+        System.out.println("\nWARNING!");
+        System.out.println("Are you sure you want to delete the book: \"" + bookTitle + "\"?");
+
+        String response = ConsoleUtils.stringInput("Type 'Y' to confirm or any other key to cancel: ", 1);
+
+        return response.equalsIgnoreCase("Y");
+    }
 
     // buscar por titulo ,author
     public void searchBooks(List<Book> books) {
@@ -104,6 +105,11 @@ public class BookView {
     public void displayBooksByGenre(List<Book> books) {
         System.out.println("\n--- Books by genre ---");
         printBooksList(books, false);
+    }
+
+    public void displayAllBooks(List<Book> allBooks) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'displayAllBooks'");
     }
 
 }
