@@ -61,7 +61,7 @@ public class MainMenu {
             case 1 -> {
                 System.out.println("Listing all books...");
                 List<Book> allBooks = controller.getAllBooks();
-                bookView.displayAllBooks(allBooks);
+                bookView.displayBooksBrief(allBooks);
             }
             case 2 -> {
                 Book newBook = bookView.getNewBookData();
