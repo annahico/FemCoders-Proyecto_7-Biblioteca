@@ -1,2 +1,1 @@
-tests\java\com\library\repository\TestAuthorRepository.class
 com\library\repository\BookRepositoryImplTest.class

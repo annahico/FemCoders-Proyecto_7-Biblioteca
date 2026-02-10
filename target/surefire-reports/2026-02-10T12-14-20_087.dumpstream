@@ -1,4 +1,4 @@
-# Created at 2026-02-10T08:39:57.792
+# Created at 2026-02-10T12:14:20.607
 Boot Manifest-JAR contains absolute paths in classpath 'A:\FACTORIA F5\PROYECTOS\FemCoders-Proyecto_6-Biblioteca\target\test-classes'
 Hint: <argLine>-Djdk.net.URLClassPath.disableClassPathURLCheck=true</argLine>
 'other' has different root
