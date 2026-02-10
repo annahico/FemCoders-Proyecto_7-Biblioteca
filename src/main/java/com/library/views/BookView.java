@@ -30,7 +30,7 @@ public class BookView {
                             .map(Genre::getName)
                             .collect(Collectors.joining(", "));
 
-            System.out.println("\n--------------------------");
+            System.out.println("\u001B[34m-------------------------------------------\u001B[0m");
             System.out.printf("ID: %-5d | Title: %-20s%n", book.getId(), book.getTitle());
             System.out.printf("Author(s): %-20s | Genre: %-15s%n", authorsNames, genresNames);
 
@@ -38,7 +38,7 @@ public class BookView {
                 System.out.println("ISBN: " + book.getIsbn());
                 System.out.println("Description: " + book.getDescription());
             }
-            System.out.println("--------------------------");
+            System.out.println("\u001B[34m-------------------------------------------\u001B[0m");
         }
     }
 
