@@ -3,8 +3,8 @@ package com.library.views;
 import java.util.List;
 import java.util.Random;
 
-import com.library.model.Book;
 import com.library.controller.BookController;
+import com.library.model.Book;
 
 public class MainMenu {
     private BookView bookView = new BookView();
