@@ -1,15 +1,2 @@
-com\library\repository\BookRepositoryImplTest$DeleteBookAuthorsTests.class
-com\library\repository\BookRepositoryImplTest$GetBooksByAuthorTests.class
-com\library\repository\BookRepositoryImplTest$SaveBookGenresTests.class
-com\library\repository\BookRepositoryImplTest$DeleteBookGenresTests.class
-com\library\repository\BookRepositoryImplTest$GetBookByTitleTests.class
-com\library\repository\BookRepositoryImplTest$GetBooksByGenreTests.class
-com\library\repository\BookRepositoryImplTest$UpdateBookTests.class
-com\library\repository\BookRepositoryImplTest$GetBookByIsbnTests.class
-com\library\repository\BookRepositoryImplTest.class
-com\library\repository\BookRepositoryImplTest$CreateBookTests.class
 tests\java\com\library\repository\TestAuthorRepository.class
-com\library\repository\BookRepositoryImplTest$DeleteBookTests.class
-com\library\repository\BookRepositoryImplTest$GetBookByIdTests.class
-com\library\repository\BookRepositoryImplTest$GetBookListTests.class
-com\library\repository\BookRepositoryImplTest$SaveBookAuthorsTests.class
+com\library\repository\BookRepositoryImplTest.class
