@@ -6,7 +6,7 @@ import com.library.model.Genre;
 
 public interface GenreRepository {
 
-     void createGenre(Genre genre);
+     Genre createGenre(Genre genre);
 
      Genre getGenreById(int id);
 

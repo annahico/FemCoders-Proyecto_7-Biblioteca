@@ -16,7 +16,7 @@ import com.library.model.Genre;
 public class AuthorRepositoryImpl implements AuthorRepository {
 
     @Override
-    public void createAuthor(Author author) {
+    public Author createAuthor(Author author) {
         String sql = "INSERT INTO authors (full_name) VALUES (?)";
 
         try (Connection connection = DBManager.getConnection(); PreparedStatement st = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
@@ -33,6 +33,7 @@ public class AuthorRepositoryImpl implements AuthorRepository {
         } catch (SQLException e) {
             throw new RuntimeException("Error creating author: " + e.getMessage());
         }
+        return author;
     }
 
     @Override

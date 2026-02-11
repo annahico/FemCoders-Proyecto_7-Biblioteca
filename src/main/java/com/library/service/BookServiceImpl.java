@@ -1,5 +1,6 @@
 package com.library.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 import com.library.model.Author;
@@ -32,16 +33,20 @@ public class BookServiceImpl implements BookService {
         }
 
         bookRepository.createBook(book);
-
+        List<Author> newAuthorList = new ArrayList<>();
+        List<Genre> newGenreList = new ArrayList<>();
         for (Author author : book.getAuthors()) {
-            authorService.createAuthorIfNotExists(author.getFullName()); 
+           author = authorService.createAuthorIfNotExists(author.getFullName());
+            newAuthorList.add(author);
         }
+            book.setAuthors(newAuthorList);
           bookRepository.saveBookAuthors(book);
 
         for (Genre genre : book.getGenres()) {
-             genreService.createGenreIfNotExists(genre.getName());
-        
+             genre = genreService.createGenreIfNotExists(genre.getName());
+                newGenreList.add(genre);
         }
+            book.setGenres(newGenreList);
          bookRepository.saveBookGenres(book);
     }
 
@@ -59,15 +64,21 @@ public class BookServiceImpl implements BookService {
         bookRepository.deleteBookAuthors(book.getId());
         bookRepository.deleteBookGenres(book.getId());
 
+        List<Author> newAuthorList = new ArrayList<>();
+        List<Genre> newGenreList = new ArrayList<>();
         for (Author author : book.getAuthors()) {
-            authorService.createAuthorIfNotExists(author.getFullName());
-            bookRepository.saveBookAuthors(book);
+           author = authorService.createAuthorIfNotExists(author.getFullName());
+             newAuthorList.add(author);
         }
+        book.setAuthors(newAuthorList);
+        bookRepository.saveBookAuthors(book);
 
         for (Genre genre : book.getGenres()) {
-              genreService.createGenreIfNotExists(genre.getName());
-            bookRepository.saveBookGenres(book);
-        }    
+               genre = genreService.createGenreIfNotExists(genre.getName());
+               newGenreList.add(genre);
+        } 
+          book.setGenres(newGenreList);
+         bookRepository.saveBookGenres(book);  
     }
 
     @Override

@@ -22,10 +22,10 @@ public class AuthorServiceImpl implements AuthorService {
         if (existing != null) {
             return existing;
         } else{            
-        Author newAuthor = Author.builder()
+        Author author = Author.builder()
                             .fullName(name)
                             .build();
-        repository.createAuthor(newAuthor);
+        Author newAuthor = repository.createAuthor(author);
         return newAuthor;}
     }
 

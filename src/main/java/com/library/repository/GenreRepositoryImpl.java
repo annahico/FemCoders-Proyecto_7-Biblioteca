@@ -13,7 +13,7 @@ import com.library.model.Genre;
 
 public class GenreRepositoryImpl implements GenreRepository {
 
-    public void createGenre(Genre genre) {
+    public Genre createGenre(Genre genre) {
 
         String sql = "INSERT INTO genres (name) VALUES (?)";
         try (
@@ -31,6 +31,7 @@ public class GenreRepositoryImpl implements GenreRepository {
         } catch (SQLException e) {
             throw new RuntimeException("error to create new genre " + e.getMessage());
         }
+        return genre;
     }
 
     public Genre getGenreById(int id) {

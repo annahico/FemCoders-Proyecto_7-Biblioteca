@@ -8,6 +8,6 @@ public interface GenreService {
     Genre createGenreIfNotExists(String name);
     List<Genre> getAllGenres();
     Genre findById(int id);
-    Genre findByName(String name);
+    List<Genre> findByName(String name);
 }
 

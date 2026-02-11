@@ -1,6 +1,6 @@
 package com.library.controller;
 
-import java.util.List;
+//import java.util.List;
 import com.library.model.Author;
 import com.library.service.AuthorService;
 
@@ -15,9 +15,9 @@ public class AuthorController {
         return service.createAuthorIfNotExists(name);
     }
 
-    public List<Author> getAllAuthors() {
-        return service.getAllAuthors();
-    }
+   // public List<Author> getAllAuthors() {
+       // return service.getAllAuthors();
+   //}
 
     public Author getAuthorById(int id) {
         return service.findById(id);

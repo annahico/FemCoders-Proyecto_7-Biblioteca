@@ -65,8 +65,6 @@ public class BookView {
                 .genres(genres)
                 .isbn(isbn)
                 .description(description)
-                .authors(authors)
-                .genres(genres)
                 .build();
     }
 

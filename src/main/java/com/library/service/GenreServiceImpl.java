@@ -4,7 +4,7 @@ import java.util.List;
 import com.library.model.Genre;
 import com.library.repository.GenreRepository;
 
-public class GenreServiceImp implements GenreService {
+public class GenreServiceImpl implements GenreService {
     private final GenreRepository repository;
 
     public GenreServiceImpl(GenreRepository repository) {
@@ -25,8 +25,8 @@ public class GenreServiceImp implements GenreService {
         Genre genre =  Genre.builder()
                         .name(name)
                         .build();
-        repository.createGenre(genre);
-        return genre;
+        Genre newGenre = repository.createGenre(genre);
+        return newGenre;
     }
 
     @Override
@@ -40,7 +40,7 @@ public class GenreServiceImp implements GenreService {
     }
 
     @Override
-    public Genre findByName(String name) {
+    public List<Genre> findByName(String name) {
         return repository.getGenreByName(name);
     }
 }
