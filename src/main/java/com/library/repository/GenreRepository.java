@@ -11,9 +11,9 @@ public interface GenreRepository {
 
      Genre getGenreById(int id);
 
-    List<Genre> getGenreByName(String name);
+     List<Genre> getGenreByName(String name);
 
-    List<Genre> getGenres();
+     List<Genre> getGenres();
 
      void updateGenre(Genre genre);
 
