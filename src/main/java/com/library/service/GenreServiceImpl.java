@@ -20,13 +20,13 @@ public class GenreServiceImpl implements GenreService {
         Genre existing = repository.getGenreByNameStrict(name);
         if (existing != null) {
             return existing;
-        }
-
+        }else{
         Genre genre =  Genre.builder()
                         .name(name)
                         .build();
         Genre newGenre = repository.createGenre(genre);
         return newGenre;
+        }
     }
 
     @Override

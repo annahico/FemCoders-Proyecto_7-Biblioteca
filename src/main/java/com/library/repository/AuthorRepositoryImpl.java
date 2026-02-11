@@ -79,12 +79,12 @@ public class AuthorRepositoryImpl implements AuthorRepository {
 
     @Override
     public Author getAuthorByNameStrict(String name) {
-        String sql = "SELECT id, full_name FROM authors WHERE full_name = ?";
+        String sql = "SELECT id, full_name FROM authors WHERE LOWER(full_name) = LOWER(?)";
         Author author = null;
 
         try (Connection connection = DBManager.getConnection(); PreparedStatement st = connection.prepareStatement(sql)) {
 
-            st.setString(1, "%" + name + "%");
+            st.setString(1, name);
 
             try (ResultSet rs = st.executeQuery()) {
                  while (rs.next()) {

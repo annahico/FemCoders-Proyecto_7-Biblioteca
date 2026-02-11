@@ -76,12 +76,12 @@ public class GenreRepositoryImpl implements GenreRepository {
     }
 
 public Genre getGenreByNameStrict(String name) {
-        String sql = "SELECT id, name FROM genres WHERE name = ?";
+        String sql = "SELECT id, name FROM genres WHERE LOWER(name) = LOWER(?)";
         Genre genre = null;
         try (
                 Connection connection = DBManager.getConnection(); PreparedStatement st = connection.prepareStatement(sql)) {
 
-            st.setString(1, "%" + name + "%");
+            st.setString(1, name );
 
             try (ResultSet rs = st.executeQuery()) {
                 if(rs.next()) {
