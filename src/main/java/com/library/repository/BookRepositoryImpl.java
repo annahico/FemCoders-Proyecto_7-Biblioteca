@@ -204,7 +204,7 @@ public class BookRepositoryImpl implements BookRepository{
     public List<Book> getBooksByAuthor(String name){
         String sql = """
                 SELECT
-                b.id, b.title, b.isbn, b.description,
+                b.id, b.title, b.isbn, b.description, b.created_at, b.updated_at,
                 STRING_AGG(DISTINCT a.full_name, ', ') AS authors,
                 STRING_AGG(DISTINCT g.name, ', ') AS genres
                 FROM books b
