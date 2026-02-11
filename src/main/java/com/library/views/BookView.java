@@ -61,6 +61,8 @@ public class BookView {
       
         return Book.builder()
                 .title(title)
+                .authors(authors)
+                .genres(genres)
                 .isbn(isbn)
                 .description(description)
                 .authors(authors)
