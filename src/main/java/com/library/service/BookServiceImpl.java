@@ -1,36 +1,94 @@
 package com.library.service;
+
 import java.util.List;
 import java.util.regex.Pattern;
-
+import com.library.model.Author;
 import com.library.model.Book;
+import com.library.model.Genre;
 import com.library.repository.BookRepository;
-import com.library.repository.BookRepositoryImpl;
-//import com.library.service.BookService;
-
+//import com.library.service.AuthorService;
+//import com.library.service.GenreService;
 public class BookServiceImpl implements BookService {
     private final BookRepository bookRepository;
+    private final AuthorService authorService;
+    private final GenreService genreService;
 
     private static final Pattern ISBN_PATTERN = Pattern.compile("^(97(8|9))?\\d{9}(\\d|X)$");
 
-    public BookServiceImpl(BookRepository bookRepository) {
+    public BookServiceImpl(BookRepository bookRepository,
+                            AuthorService authorService,
+                            GenreService genreService){
         this.bookRepository = bookRepository;
+        this.authorService = authorService;
+        this.genreService = genreService;
     }
-    
+
     @Override
     public void createBook(Book book){
-        //existe el autor? si no, lo crea (y si es que sí, recupera el id)
-        //existe el genero? sino, lo crea (y si es que sí, recupera el id)
-        ///existe el libro?
-        // crea libro
-        //CREA ENLACE A TABLAS SECUNDARIAS
+        validateBook(book);
 
         if (bookRepository.getBookByIsbn(book.getIsbn()) != null) {
-            throw new IllegalArgumentException("A book with this ISBN already exists.");
+            throw new IllegalArgumentException("ISBN already exists");
         }
-        validateBook(book);
+
         bookRepository.createBook(book);
-        //bookRepository.saveBookAuthors(book);
-        //bookRepository.saveBookGenres(book);
+
+        for (Author author : book.getAuthors()) {
+            Author persistedAuthor =
+                    authorService.createAuthorIfNotExists(author.getFullName());
+            bookRepository.saveBookAuthors(book, persistedAuthor);
+        }
+
+        for (Genre genre : book.getGenres()) {
+            Genre persistedGenre =
+                    genreService.createGenreIfNotExists(genre.getName());
+            bookRepository.saveBookGenres(book, persistedGenre);
+        }
+    }
+
+    @Override
+    public void updateBook(Book book) {
+
+        validateBook(book);
+
+        Book existing = bookRepository.getBookbyId(book.getId());
+        if (existing == null) {
+            throw new IllegalArgumentException("Book not found");
+        }
+
+        bookRepository.updateBook(book);
+        bookRepository.deleteBookAuthors(book.getId());
+        bookRepository.deleteBookGenres(book.getId());
+
+        for (Author author : book.getAuthors()) {
+            Author persistedAuthor =
+                    authorService.createAuthorIfNotExists(author.getFullName());
+            bookRepository.saveBookAuthors(book, persistedAuthor);
+        }
+
+        for (Genre genre : book.getGenres()) {
+            Genre persistedGenre =
+                    genreService.createGenreIfNotExists(genre.getName());
+            bookRepository.saveBookGenres(book, persistedGenre);
+        }    
+    }
+
+    @Override
+    public void deleteBook(int id) {
+
+        Book book = bookRepository.getBookbyId(id);
+        if (book == null) {
+            throw new IllegalArgumentException("Book not found with ID: " + id);
+        }
+
+        bookRepository.deleteBookAuthors(id);
+        bookRepository.deleteBookGenres(id);
+        bookRepository.deleteBook(id);
+    }
+
+    @Override
+    public Book findById(int id) {
+        return bookRepository.getBookbyId(id);
     }
 
     @Override
@@ -39,60 +97,18 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Book findById(int id) {
-        if (id <= 0) {
-            throw new IllegalArgumentException("Invalid book ID.");
-        }
-        return bookRepository.getBookbyId(id);
-    }
-
-    @Override
     public List<Book> findByTitle(String title) {
-        if (title.isBlank()) {
-            throw new IllegalArgumentException("Title cannot be empty.");
-        }
-        return bookRepository.getBookbyTitle(title.trim());
+        return bookRepository.getBookbyTitle(title);
     }
-
+    
     @Override
     public List<Book> findByAuthor(String author) {
-        if (author.isBlank()) {
-            throw new IllegalArgumentException("Author cannot be empty.");
-        }
-        return bookRepository.getBooksByAuthor(author.trim());
+        return bookRepository.getBooksByAuthor(author);
     }
-
+    
     @Override
     public List<Book> findByGenre(String genre) {
-        if (genre.isBlank()) {
-            throw new IllegalArgumentException("Genre cannot be empty.");
-        }
-        return bookRepository.getBooksByGenre(genre.trim());
-    }
-
-    @Override
-    public void updateBook(Book book) {
-        if (book == null || book.getId() <= 0) {
-            throw new IllegalArgumentException("Invalid book data.");
-        }
-        validateBook(book);
-    
-        bookRepository.updateBook(book);
-        bookRepository.deleteBookAuthors(book.getId());
-        bookRepository.deleteBookGenres(book.getId());
-        bookRepository.saveBookAuthors(book);
-        bookRepository.saveBookGenres(book);
-    }
-
-    @Override
-    public void deleteBook(int id) {
-        if (id <= 0) {
-            throw new IllegalArgumentException("Invalid book ID.");
-        }
-
-        bookRepository.deleteBookAuthors(id);
-        bookRepository.deleteBookGenres(id);
-        bookRepository.deleteBook(id);
+        return bookRepository.getBooksByGenre(genre);
     }
 
     private void validateBook(Book book){
@@ -107,7 +123,7 @@ public class BookServiceImpl implements BookService {
             throw new IllegalArgumentException("Invalid ISBN format.");
         }
 
-        if (book.getDescription() != null || book.getDescription().length() > 200){
+        if (book.getDescription() != null && book.getDescription().length() > 200){
             throw new IllegalArgumentException("Enter a description (200 characters max)");
         }
         if (book.getAuthors() == null || book.getAuthors().isEmpty()){

@@ -2,13 +2,12 @@ package com.library.views;
 
 import java.util.List;
 import java.util.Random;
-
 import com.library.model.Book;
 import com.library.controller.BookController;
 
 public class MainMenu {
-    private BookView bookView = new BookView();
-    private BookController controller;
+    private final BookView bookView = new BookView();
+    private final BookController controller;
 
     public MainMenu(BookController controller) {
         this.controller = controller;
@@ -61,7 +60,7 @@ public class MainMenu {
             case 1 -> {
                 System.out.println("Listing all books...");
                 List<Book> allBooks = controller.getAllBooks();
-                bookView.displayAllBooks(allBooks);
+                bookView.displayBooksBrief(allBooks);
             }
             case 2 -> {
                 Book newBook = bookView.getNewBookData();
@@ -69,41 +68,38 @@ public class MainMenu {
                 System.out.println("Book saved successfully!");
             }
             case 3 -> {
-                //int id = bookView.askForBookId("Edit");
-                // Book BookToEdit = service.findById(id);
-
-                // if (BookToEdit != null) {
-                //     Book updatedBook = bookView.getEditBookData(BookToEdit);
-                //     service.updatedBook(updatedBook);
-                //     System.out.println("Book updated successfully!");
-                // } else {
-                //     System.out.println("Book not found with ID: " + id);
-                // }
-
+                int id = bookView.askForBookId("Edit");
+                Book BookToEdit = controller.findById(id);
+                if (BookToEdit != null) {
+                    Book updatedBook = bookView.getEditBookData(BookToEdit);
+                    controller.updateBook(updatedBook);
+                    System.out.println("Book updated successfully!");
+                } else {
+                    System.out.println("Book not found with ID: " + id);
+                }
                 System.out.println("Editing logic ready, waiting for service.findById()");
             }
             case 4 -> {
-                //int id = bookView.askForBookId("Delete");
-                //System.out.println("Processing deletion for ID: " + id);
+                int id = bookView.askForBookId("Delete");
+                controller.deleteBook(id);
+                System.out.println("Processing deletion for ID: " + id);
             }
-
             case 5 -> {
-                //String title = ConsoleUtils.stringInput("Enter Title to search: ", 200);
-                // List<Book> results = service.findByTitle(title);
-                // bookView.searchBooks(results);
+                String title = ConsoleUtils.stringInput("Enter Title to search: ", 200);
+                List<Book> results = controller.findByTitle(title);
+                bookView.searchBooks(results);
             }
             case 6 -> {
                 String author = ConsoleUtils.stringInput("Enter Author to search: ", 100);
-                //List<Book> results = service.findByAuthor(author);
-                //bookView.searchBooks(results);
+                List<Book> results = controller.findByAuthor(author);
+                bookView.searchBooks(results);
                 System.out.println("Searching for books by: " + author);
             }
             case 7 -> {
-                //String genre = ConsoleUtils.stringInput("Enter Genre to search: ", 50);
-                // List<Book> results = service.findByGenre(genre);
-                // bookView.displayBooksByGenre(results);
+                String genre = ConsoleUtils.stringInput("Enter Genre to search: ", 50);
+                List<Book> results = controller.findByGenre(genre);
+                bookView.displayBooksByGenre(results);
             }
-
             case 0 -> System.out.println("Exiting the system... Goodbye!");
             default -> System.out.println("Invalid Option. Please try again.");
         }

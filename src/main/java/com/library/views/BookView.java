@@ -6,7 +6,7 @@ import com.library.model.Book;
 public class BookView {
 
     private void printBooksList(List<Book> books, boolean showFullDetails) {
-        if (books.isEmpty()) {
+        if (books == null || books.isEmpty()) {
             System.out.println("\nBooks not found.");
             return;
         }
@@ -14,9 +14,10 @@ public class BookView {
         for (Book book : books) {
             System.out.println("\n--------------------------");
             System.out.printf("ID: %-5d | Títtle: %-20s%n", book.getId(), book.getTitle());
-            // System.out.printf("Author: %-20s | Génre: %-15s%n", book.getAuthor(),
-            // book.getGenre());
+            System.out.printf("Author: %-20s | Génre: %-15s%n", book.getAuthor(),
+            book.getGenre());
 
+            
             // Solo mostramos la descripción si se solicita 
             if (showFullDetails) {
                 System.out.println("Description: " + book.getDescription());
@@ -36,27 +37,28 @@ public class BookView {
         System.out.println("\n\u001B[32m--- ADDING NEW BOOK ---\u001B[0m");
 
         String title = ConsoleUtils.stringInput("Title: ", 200);
-        // String author = ConsoleUtils.stringInput("Author: ", 100);
+        String author = ConsoleUtils.stringInput("Author: ", 100);
         String isbn = ConsoleUtils.stringInput("ISBN: ", 20);
-        // String genre = ConsoleUtils.stringInput("Genre: ", 50);
+        String genre = ConsoleUtils.stringInput("Genre: ", 50);
         String description = ConsoleUtils.stringInput("Description: ", 200);
         return Book.builder()
                 .title(title)
                 .isbn(isbn)
                 .description(description)
-
+                .authors(author);
+                .genres(genre);
                 .build();
     }
 
     //editar
     public Book getEditBookData(Book existingBook) {
-    System.out.println("\n--- EDITANDO: " + existingBook.getTitle() + " ---");
-    System.out.println("(press enter to not change the actual value)");
-
-    
-    String title = ConsoleUtils.stringInput("New tittle [" + existingBook.getTitle() + "]: ", 200);
+        System.out.println("\n--- EDITANDO: " + existingBook.getTitle() + " ---");
+        System.out.println("(press enter to not change the actual value)");
+        String title = ConsoleUtils.stringInput("New tittle [" + existingBook.getTitle() + "]: ", 200);
    
-    if (title.isEmpty()) title = existingBook.getTitle();
+        if (title.isEmpty()){
+            title = existingBook.getTitle();
+        }
 
     String isbn = ConsoleUtils.stringInput("New ISBN [" + existingBook.getIsbn() + "]: ", 20);
     if (isbn.isEmpty()) isbn = existingBook.getIsbn();
@@ -71,7 +73,7 @@ public class BookView {
             .isbn(isbn)
             .description(description)
             .build();
-}
+    }
 
     // pregunytar id para eliminar
 
@@ -79,20 +81,15 @@ public class BookView {
         System.out.println("\n--- " + action.toUpperCase() + " LIBRO ---");
         // nos aseguramos de que sea un número válido
         int id = ConsoleUtils.readInt("Introduce el ID del libro: ", 1, 9999);
-
         return id;
     }
 
     public boolean confirmDeletion(String bookTitle) {
-    System.out.println("\nWARNING!");
-    System.out.println("Are you sure you want to delete the book: \"" + bookTitle + "\"?");
-    
-   
-    String response = ConsoleUtils.stringInput("Type 'Y' to confirm or any other key to cancel: ", 1);
-    
-    
-    return response.equalsIgnoreCase("Y");
-}
+        System.out.println("\nWARNING!");
+        System.out.println("Are you sure you want to delete the book: \"" + bookTitle + "\"?");
+        String response = ConsoleUtils.stringInput("Type 'Y' to confirm or any other key to cancel: ", 1);
+        return response.equalsIgnoreCase("Y");
+    }
 
     // buscar por titulo ,author
     public void searchBooks(List<Book> books) {
