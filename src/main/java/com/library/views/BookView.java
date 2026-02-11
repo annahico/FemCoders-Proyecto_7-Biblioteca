@@ -16,23 +16,18 @@ public class BookView {
         }
 
         for (Book book : books) {
-            // CORRECCIÓN 1: Usamos getFullName() porque en Author.java es 'fullName'
-            String authorsNames = (book.getAuthors() == null || book.getAuthors().isEmpty())
-                    ? "Unknown Author"
-                    : book.getAuthors().stream()
-                            .map(Author::getFullName)
-                            .collect(Collectors.joining(", "));
 
-            // Mantenemos getName() para Genre porque en Genre.java es 'name'
-            String genresNames = (book.getGenres() == null || book.getGenres().isEmpty())
-                    ? "No Genre"
-                    : book.getGenres().stream()
-                            .map(Genre::getName)
-                            .collect(Collectors.joining(", "));
+            String authorsNames = book.getAuthors().stream()
+                    .map(Author::getFullName)
+                    .collect(Collectors.joining(","));
 
-            System.out.println("\u001B[34m-------------------------------------------\u001B[0m");
-            System.out.printf("ID: %-5d | Title: %-20s%n", book.getId(), book.getTitle());
-            System.out.printf("Author(s): %-20s | Genre: %-15s%n", authorsNames, genresNames);
+            String genresNames = book.getGenres().stream()
+                    .map(Genre::getName)
+                    .collect(Collectors.joining(","));
+
+            System.out.println("\n--------------------------");
+            System.out.printf("ID: %-5d | Títtle: %-20s%n", book.getId(), book.getTitle());
+            System.out.printf("Author: %-19s | Genres: %-15s%n", authorsNames, genresNames);
 
             if (showFullDetails) {
                 System.out.println("ISBN: " + book.getIsbn());
@@ -56,57 +51,76 @@ public class BookView {
         String description = ConsoleUtils.stringInput("Description: ", 200);
 
         List<Author> authors = new ArrayList<>();
-        // CORRECCIÓN 2: Usamos .fullName() en el builder
+
         authors.add(Author.builder().fullName(authorName).build());
 
         List<Genre> genres = new ArrayList<>();
-        // Genre sigue usando .name()
+
         genres.add(Genre.builder().name(genreName).build());
 
+      
         return Book.builder()
                 .title(title)
                 .authors(authors)
                 .genres(genres)
                 .isbn(isbn)
                 .description(description)
+                .authors(authors)
+                .genres(genres)
                 .build();
     }
 
+    // editar
     public Book getEditBookData(Book existingBook) {
-        System.out.println("\n--- EDITING: " + existingBook.getTitle() + " ---");
+        System.out.println("\n--- EDITANDO: " + existingBook.getTitle() + " ---");
+        System.out.println("(Press enter to not change the actual value)");
 
-        String title = ConsoleUtils.stringInput("New Title [" + existingBook.getTitle() + "]: ", 200);
-        if (title.isEmpty()) {
-            title = existingBook.getTitle();
-        }
+        // 1. Título
+        String titleInput = ConsoleUtils.stringInput("New Title [" + existingBook.getTitle() + "]: ", 200);
+        String title = titleInput.isEmpty() ? existingBook.getTitle() : titleInput;
 
-        String authorName = ConsoleUtils.stringInput("New Author Name: ", 200);
-        List<Author> authors = existingBook.getAuthors();
+        // 2. Autor (Manejando la lista de objetos Author)
+        String authorInput = ConsoleUtils.stringInput("New Author: ", 100);
+        List<Author> authors = authorInput.isEmpty()
+                ? existingBook.getAuthors()
+                : List.of(Author.builder().fullName(authorInput).build());
 
-        if (!authorName.isEmpty()) {
-            authors = new ArrayList<>();
-            // CORRECCIÓN 3: Usamos .fullName() en el builder también aquí
-            authors.add(Author.builder().fullName(authorName).build());
-        }
+        // 3. ISBN
+        String isbnInput = ConsoleUtils.stringInput("New ISBN [" + existingBook.getIsbn() + "]: ", 17);
+        String isbn = isbnInput.isEmpty() ? existingBook.getIsbn() : isbnInput;
 
-        String isbn = ConsoleUtils.stringInput("New ISBN [" + existingBook.getIsbn() + "]: ", 20);
-        if (isbn.isEmpty()) {
-            isbn = existingBook.getIsbn();
-        }
+        // 4. Descripción
+        String descInput = ConsoleUtils.stringInput("New Description: ", 200);
+        String description = descInput.isEmpty() ? existingBook.getDescription() : descInput;
+
+        // 5. Género
+        String genreInput = ConsoleUtils.stringInput("New Genre: ", 50);
+        List<Genre> genres = genreInput.isEmpty()
+                ? existingBook.getGenres()
+                : List.of(Genre.builder().name(genreInput).build());
 
         return Book.builder()
-                .id(existingBook.getId())
+                .id(existingBook.getId()) // Mantenemos el ID original
                 .title(title)
                 .authors(authors)
-                .genres(existingBook.getGenres())
                 .isbn(isbn)
-                .description(existingBook.getDescription())
+                .description(description)
+                .genres(genres)
                 .build();
     }
 
     public int askForBookId(String action) {
         System.out.println("\n--- " + action.toUpperCase() + " BOOK ---");
         return ConsoleUtils.readInt("Enter the Book ID: ", 1, 9999);
+    }
+
+    public boolean confirmDeletion(String bookTitle) {
+        System.out.println("\nWARNING!");
+        System.out.println("Are you sure you want to delete the book: \"" + bookTitle + "\"?");
+
+        String response = ConsoleUtils.stringInput("Type 'Y' to confirm or any other key to cancel: ", 1);
+
+        return response.equalsIgnoreCase("Y");
     }
 
     public void searchBooks(List<Book> books) {

@@ -107,7 +107,7 @@ public class BookServiceImpl implements BookService {
             throw new IllegalArgumentException("Invalid ISBN format.");
         }
 
-        if (book.getDescription() != null || book.getDescription().length() > 200){
+        if (book.getDescription() != null && book.getDescription().length() > 200){
             throw new IllegalArgumentException("Enter a description (200 characters max)");
         }
         if (book.getAuthors() == null || book.getAuthors().isEmpty()){

@@ -84,7 +84,8 @@ public class MainMenu {
             }
             case 4 -> {
                 int id = bookView.askForBookId("Delete");
-                System.out.println("Processing deletion for ID: " + id);
+                controller.deleteBook(id);
+
             }
 
             case 5 -> {
