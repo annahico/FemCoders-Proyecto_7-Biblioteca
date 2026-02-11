@@ -13,7 +13,7 @@ public class BookServiceImpl implements BookService {
     private final AuthorService authorService;
     private final GenreService genreService;
 
-    private static final Pattern ISBN_PATTERN = Pattern.compile("^(97(8|9))?\\d{9}(\\d|X)$");
+    private static final Pattern ISBN_PATTERN = Pattern.compile("^[0-9-]{10,17}$");
 
     public BookServiceImpl(BookRepository bookRepository,
                             AuthorService authorService,

@@ -21,8 +21,10 @@ public class Book {
     private String isbn;
     private String description;
     @Builder.Default
+
     private List<Author> authors = new ArrayList<>();
     @Builder.Default
+
     private List<Genre> genres = new ArrayList<>();
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

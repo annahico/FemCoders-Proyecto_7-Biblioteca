@@ -13,7 +13,7 @@ public interface AuthorRepository {
 
     public Author getAuthorByName(String name);
 
-    public List<Book> getBooksbyAuthor(Author author); //esto no puede devolver un libro, sino un array de objetos? solo strings?
+    public List<Book> getBooksbyAuthor(Author author);
 
     public void updateAuthor(Author author);
 

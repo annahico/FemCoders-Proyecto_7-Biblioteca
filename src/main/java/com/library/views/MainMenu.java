@@ -2,8 +2,9 @@ package com.library.views;
 
 import java.util.List;
 import java.util.Random;
-import com.library.model.Book;
+
 import com.library.controller.BookController;
+import com.library.model.Book;
 
 public class MainMenu {
     private final BookView bookView = new BookView();
@@ -70,6 +71,7 @@ public class MainMenu {
             case 3 -> {
                 int id = bookView.askForBookId("Edit");
                 Book BookToEdit = controller.findById(id);
+
                 if (BookToEdit != null) {
                     Book updatedBook = bookView.getEditBookData(BookToEdit);
                     controller.updateBook(updatedBook);
@@ -77,12 +79,13 @@ public class MainMenu {
                 } else {
                     System.out.println("Book not found with ID: " + id);
                 }
+
                 System.out.println("Editing logic ready, waiting for service.findById()");
             }
             case 4 -> {
                 int id = bookView.askForBookId("Delete");
                 controller.deleteBook(id);
-                System.out.println("Processing deletion for ID: " + id);
+
             }
             case 5 -> {
                 String title = ConsoleUtils.stringInput("Enter Title to search: ", 200);
