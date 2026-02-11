@@ -74,6 +74,39 @@ public class GenreRepositoryImpl implements GenreRepository {
         return genres;
     }
 
+public Genre getGenreByNameStrict(String name) {
+        String sql = "SELECT id, name FROM genres WHERE name = ?";
+        Genre genre = null;
+        try (
+                Connection connection = DBManager.getConnection(); PreparedStatement st = connection.prepareStatement(sql)) {
+
+            st.setString(1, "%" + name + "%");
+
+            try (ResultSet rs = st.executeQuery()) {
+                if(rs.next()) {
+                    genre = mapResultSetToGenre(rs);
+                }
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException("error to get the genre by name" + e.getMessage());
+        }
+        return genre;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     public List<Genre> getGenres() {
         String sql = "SELECT id, name FROM genres ORDER BY name";
         List<Genre> genreList = new ArrayList<>();

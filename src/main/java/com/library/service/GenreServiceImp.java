@@ -17,12 +17,14 @@ public class GenreServiceImp implements GenreService {
             throw new IllegalArgumentException("Genre name cannot be empty");
         }
 
-        Genre existing = repository.getGenreByName(name);
+        Genre existing = repository.getGenreByNameStrict(name);
         if (existing != null) {
             return existing;
         }
 
-        Genre genre = new Genre(name.trim());
+        Genre genre =  Genre.builder()
+                        .name(name)
+                        .build();
         repository.createGenre(genre);
         return genre;
     }

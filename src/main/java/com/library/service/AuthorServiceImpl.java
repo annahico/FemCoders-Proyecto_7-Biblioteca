@@ -2,6 +2,7 @@ package com.library.service;
 
 import java.util.List;
 import com.library.model.Author;
+//import com.library.model.Book;
 import com.library.repository.AuthorRepository;
 
 public class AuthorServiceImpl implements AuthorService {
@@ -17,20 +18,21 @@ public class AuthorServiceImpl implements AuthorService {
             throw new IllegalArgumentException("Author name cannot be empty");
         }
 
-        Author existing = repository.getAuthorByName(name);
+        Author existing = repository.getAuthorByNameStrict(name);
         if (existing != null) {
             return existing;
-        }
-
-        Author newAuthor = new Author(name); //consultar
+        } else{            
+        Author newAuthor = Author.builder()
+                            .fullName(name)
+                            .build();
         repository.createAuthor(newAuthor);
-        return newAuthor;
+        return newAuthor;}
     }
 
-    @Override
-    public List<Author> getAllAuthors() {
-        return repository.getBooksbyAuthor();//consultar
-    }
+    // @Override
+    // public List<Author> getAllAuthors() {
+    //     return repository.getBooksbyAuthor();//consultar
+    // }
 
     @Override
     public Author findById(int id) {
@@ -38,7 +40,7 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public Author findByName(String name) {
+    public List<Author> findByName(String name) {
         return repository.getAuthorByName(name);
     }
 }

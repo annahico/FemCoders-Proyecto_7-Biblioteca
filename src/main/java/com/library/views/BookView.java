@@ -47,7 +47,7 @@ public class BookView {
         String title = ConsoleUtils.stringInput("Title: ", 200);
         String authorName = ConsoleUtils.stringInput("Author Name: ", 200);
         String genreName = ConsoleUtils.stringInput("Genre Name: ", 50);
-        String isbn = ConsoleUtils.stringInput("ISBN: ", 20);
+        String isbn = ConsoleUtils.stringInput("ISBN: ", 17);
         String description = ConsoleUtils.stringInput("Description: ", 200);
 
         List<Author> authors = new ArrayList<>();

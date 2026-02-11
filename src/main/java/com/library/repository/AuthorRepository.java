@@ -11,7 +11,8 @@ public interface AuthorRepository {
 
     public Author getAuthorById(int id);
 
-    public Author getAuthorByName(String name);
+    public List<Author> getAuthorByName(String name);
+    public Author getAuthorByNameStrict(String name);
 
     public List<Book> getBooksbyAuthor(Author author);
 

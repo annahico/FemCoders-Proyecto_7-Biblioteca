@@ -34,16 +34,15 @@ public class BookServiceImpl implements BookService {
         bookRepository.createBook(book);
 
         for (Author author : book.getAuthors()) {
-            Author persistedAuthor =
-                    authorService.createAuthorIfNotExists(author.getFullName());
-            bookRepository.saveBookAuthors(book, persistedAuthor);
+            authorService.createAuthorIfNotExists(author.getFullName()); 
         }
+          bookRepository.saveBookAuthors(book);
 
         for (Genre genre : book.getGenres()) {
-            Genre persistedGenre =
-                    genreService.createGenreIfNotExists(genre.getName());
-            bookRepository.saveBookGenres(book, persistedGenre);
+             genreService.createGenreIfNotExists(genre.getName());
+        
         }
+         bookRepository.saveBookGenres(book);
     }
 
     @Override
@@ -61,15 +60,13 @@ public class BookServiceImpl implements BookService {
         bookRepository.deleteBookGenres(book.getId());
 
         for (Author author : book.getAuthors()) {
-            Author persistedAuthor =
-                    authorService.createAuthorIfNotExists(author.getFullName());
-            bookRepository.saveBookAuthors(book, persistedAuthor);
+            authorService.createAuthorIfNotExists(author.getFullName());
+            bookRepository.saveBookAuthors(book);
         }
 
         for (Genre genre : book.getGenres()) {
-            Genre persistedGenre =
-                    genreService.createGenreIfNotExists(genre.getName());
-            bookRepository.saveBookGenres(book, persistedGenre);
+              genreService.createGenreIfNotExists(genre.getName());
+            bookRepository.saveBookGenres(book);
         }    
     }
 
