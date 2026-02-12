@@ -7,6 +7,7 @@ import com.library.model.Author;
 import com.library.model.Book;
 import com.library.model.Genre;
 import com.library.repository.BookRepository;
+import com.library.views.BookView;
 //import com.library.service.AuthorService;
 //import com.library.service.GenreService;
 public class BookServiceImpl implements BookService {
@@ -88,6 +89,7 @@ public class BookServiceImpl implements BookService {
         if (book == null) {
             throw new IllegalArgumentException("Book not found with ID: " + id);
         }
+        
 
         bookRepository.deleteBookAuthors(id);
         bookRepository.deleteBookGenres(id);

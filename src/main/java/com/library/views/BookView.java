@@ -11,10 +11,14 @@ public class BookView {
 
     public static final String RED = "\u001B[31m";
     public static final String RESET = "\u001B[0m";
+    public static final String BLUE = "\u001B[34m";
+    public static final String LILA = "\u001B[35;3m";
+    public static final String ROSA = "\u001B[38;5;218m";
+    public static final String GREEN = "\u001B[32m";
 
     private void printBooksList(List<Book> books, boolean showFullDetails) {
         if (books == null || books.isEmpty()) {
-            System.out.println("\n\u001B[31mNo books found.\u001B[0m");
+            System.out.println(RED + "No books found" + RESET);
             return;
         }
 
@@ -28,27 +32,31 @@ public class BookView {
                     .map(Genre::getName)
                     .collect(Collectors.joining(", "));
 
-            System.out.println("\n--------------------------");
-            System.out.printf("ID: %-5d | Títtle: %-20s%n", book.getId(), book.getTitle());
+            System.out.println(
+                    BLUE + "------------------------------------------------------------------------------------------"
+                            + RESET);
+            System.out.printf("ID: %-5d | Títle: %-20s%n", book.getId(), book.getTitle());
             System.out.printf("Author: %-19s | Genres: %-15s%n", authorsNames, genresNames);
 
             if (showFullDetails) {
                 System.out.println("ISBN: " + book.getIsbn());
                 System.out.println("Description: " + book.getDescription());
             }
-            System.out.println("--------------------------");
+            System.out.println(
+                    BLUE + "------------------------------------------------------------------------------------------"
+                            + RESET);
         }
     }
 
     public void displayBooksBrief(List<Book> books) {
         System.out.println();
-        System.out.println("\u001B[38;5;218m\\n--- BOOKS INVENTORY ---\u001B[0m");
+        System.out.println(ROSA + "----------- BOOKS INVENTORY ----------" + RESET);
         printBooksList(books, false);
     }
 
     public Book getNewBookData() {
 
-        System.out.println("\n\u001B[32m--- ADDING NEW BOOK ---\u001B[0m");
+        System.out.println(BLUE + "-------- ADDING NEW BOOK -------" + RESET);
         String title = ConsoleUtils.stringInput("Title: ", 200);
 
         List<Author> authors = new ArrayList<>();
@@ -71,9 +79,9 @@ public class BookView {
                     addAuthors = false;
                     validResponse = true;
 
-                } else if (moreAuthors.equalsIgnoreCase("Y")){
+                } else if (moreAuthors.equalsIgnoreCase("Y")) {
                     validResponse = true;
-                    
+
                 } else {
                     System.out.println(RED + "Please select Y or N" + RESET);
 
@@ -83,18 +91,15 @@ public class BookView {
 
         }
 
-      
-         List<Genre> genres = new ArrayList<>();
+        List<Genre> genres = new ArrayList<>();
 
-      
-
-         boolean addGenre = true;
+        boolean addGenre = true;
 
         while (addGenre == true) {
 
             String genreName = ConsoleUtils.stringInput("Genre Name: ", 50);
 
-              genres.add(Genre.builder().name(genreName).build());
+            genres.add(Genre.builder().name(genreName).build());
 
             boolean validResponse = false;
 
@@ -107,9 +112,9 @@ public class BookView {
                     addGenre = false;
                     validResponse = true;
 
-                } else if (moreGenres.equalsIgnoreCase("Y")){
+                } else if (moreGenres.equalsIgnoreCase("Y")) {
                     validResponse = true;
-                    
+
                 } else {
                     System.out.println(RED + "Please select Y or N" + RESET);
 
@@ -122,8 +127,6 @@ public class BookView {
         String isbn = ConsoleUtils.stringInput("ISBN: ", 17, "^[0-9-]{10,17}$");
         String description = ConsoleUtils.stringInput("Description: ", 200);
 
-       
-
         return Book.builder()
                 .title(title)
                 .authors(authors)
@@ -133,37 +136,31 @@ public class BookView {
                 .build();
     }
 
-    // editar
     public Book getEditBookData(Book existingBook) {
         System.out.println("--- EDITING: " + existingBook.getTitle() + " ---");
         System.out.println("(Press enter to not change the actual value)");
 
-        // 1. Título
         String titleInput = ConsoleUtils.stringInputEdit("New Title [" + existingBook.getTitle() + "]: ", 200);
         String title = titleInput.isEmpty() ? existingBook.getTitle() : titleInput;
 
-        // 2. Autor (Manejando la lista de objetos Author)
         String authorInput = ConsoleUtils.stringInputEdit("New Author: ", 100);
         List<Author> authors = authorInput.isEmpty()
                 ? existingBook.getAuthors()
                 : List.of(Author.builder().fullName(authorInput).build());
 
-        // 3. ISBN
         String isbnInput = ConsoleUtils.stringInputEdit("New ISBN [" + existingBook.getIsbn() + "]: ", 17);
         String isbn = isbnInput.isEmpty() ? existingBook.getIsbn() : isbnInput;
 
-        // 4. Descripción
         String descInput = ConsoleUtils.stringInputEdit("New Description: ", 200);
         String description = descInput.isEmpty() ? existingBook.getDescription() : descInput;
 
-        // 5. Género
         String genreInput = ConsoleUtils.stringInputEdit("New Genre: ", 50);
         List<Genre> genres = genreInput.isEmpty()
                 ? existingBook.getGenres()
                 : List.of(Genre.builder().name(genreInput).build());
 
         return Book.builder()
-                .id(existingBook.getId()) // Mantenemos el ID original
+                .id(existingBook.getId())
                 .title(title)
                 .authors(authors)
                 .isbn(isbn)
@@ -178,8 +175,8 @@ public class BookView {
     }
 
     public boolean confirmDeletion(String bookTitle) {
-        System.out.println("WARNING!");
-        System.out.println("Are you sure you want to delete the book: \"" + bookTitle + "\"?");
+        System.out.println(RED + "WARNING!");
+        System.out.println("Are you sure you want to delete the book: \"" + bookTitle + "\"?" + RESET);
 
         String response = ConsoleUtils.stringInput("Type 'Y' to confirm or any other key to cancel: ", 1);
 
