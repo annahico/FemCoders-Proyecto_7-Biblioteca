@@ -7,13 +7,14 @@ import com.library.model.Author;
 import com.library.model.Book;
 import com.library.model.Genre;
 import com.library.repository.BookRepository;
-import com.library.views.BookView;
 //import com.library.service.AuthorService;
 //import com.library.service.GenreService;
 public class BookServiceImpl implements BookService {
     private final BookRepository bookRepository;
     private final AuthorService authorService;
     private final GenreService genreService;
+    public static final String RED = "\u001B[31m";
+    public static final String RESET = "\u001B[0m";
 
     private static final Pattern ISBN_PATTERN = Pattern.compile("^[0-9-]{10,17}$");
 
@@ -30,7 +31,7 @@ public class BookServiceImpl implements BookService {
         validateBook(book);
 
         if (bookRepository.getBookByIsbn(book.getIsbn()) != null) {
-            throw new IllegalArgumentException("ISBN already exists");
+            throw new IllegalArgumentException(RED+"ISBN already exists"+RESET);
         }
 
         bookRepository.createBook(book);
@@ -58,7 +59,7 @@ public class BookServiceImpl implements BookService {
 
         Book existing = bookRepository.getBookbyId(book.getId());
         if (existing == null) {
-            throw new IllegalArgumentException("Book not found");
+            throw new IllegalArgumentException(RED+"Book not found"+RESET);
         }
 
         bookRepository.updateBook(book);
@@ -85,10 +86,10 @@ public class BookServiceImpl implements BookService {
     @Override
     public void deleteBook(int id) {
 
-        Book book = bookRepository.getBookbyId(id);
-        if (book == null) {
-            throw new IllegalArgumentException("Book not found with ID: " + id);
-        }
+        // Book book = bookRepository.getBookbyId(id);
+        // if (book == null) {
+        //     throw new IllegalArgumentException("Book not found with ID: " + id);
+        // }
         
 
         bookRepository.deleteBookAuthors(id);
@@ -98,7 +99,11 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public Book findById(int id) {
-        return bookRepository.getBookbyId(id);
+        Book book = bookRepository.getBookbyId(id);
+        if (book == null) {
+            throw new IllegalArgumentException(RED+"Book not found with ID: " + id+RESET);
+        }
+        return book;
     }
 
     @Override
@@ -123,24 +128,24 @@ public class BookServiceImpl implements BookService {
 
     private void validateBook(Book book){
         if (book == null){
-            throw new IllegalArgumentException("Enter a book, cannot be null");
+            throw new IllegalArgumentException(RED + "Enter a book, cannot be null" + RESET);
         }
         if (book.getTitle() == null || book.getTitle().isBlank()){
-            throw new IllegalArgumentException("Enter a title (required)");
+            throw new IllegalArgumentException(RED + "Enter a title (required)" + RESET);
         }
 
         if (!ISBN_PATTERN.matcher(book.getIsbn()).matches()) {
-            throw new IllegalArgumentException("Invalid ISBN format.");
+            throw new IllegalArgumentException(RED + "Invalid ISBN format." + RESET);
         }
 
         if (book.getDescription() != null && book.getDescription().length() > 200){
-            throw new IllegalArgumentException("Enter a description (200 characters max)");
+            throw new IllegalArgumentException(RED + "Enter a description (200 characters max)" + RESET);
         }
         if (book.getAuthors() == null || book.getAuthors().isEmpty()){
-            throw new IllegalArgumentException("It must have at least one author");
+            throw new IllegalArgumentException(RED + "It must have at least one author" + RESET);
         }
         if (book.getGenres() == null || book.getGenres().isEmpty()){
-            throw new IllegalArgumentException("You must have at least one gender");
+            throw new IllegalArgumentException(RED + "You must have at least one gender" + RESET);
         }
     }
     

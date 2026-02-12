@@ -94,8 +94,12 @@ public class MainMenu {
             }
             case 4 -> {
                 int id = bookView.askForBookId("Delete");
-                controller.deleteBook(id);
+                Book bookToDelete = controller.findById(id);
+                boolean delete = bookView.confirmDeletion(bookToDelete.getTitle());
 
+                if(delete){
+                controller.deleteBook(id);
+                }
             }
             case 5 -> {
                 String title = ConsoleUtils.stringInput("Enter Title to search: ", 200);
