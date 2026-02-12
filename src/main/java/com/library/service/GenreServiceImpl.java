@@ -4,7 +4,7 @@ import java.util.List;
 import com.library.model.Genre;
 import com.library.repository.GenreRepository;
 
-public class GenreServiceImp implements GenreService {
+public class GenreServiceImpl implements GenreService {
     private final GenreRepository repository;
 
     public GenreServiceImpl(GenreRepository repository) {
@@ -17,14 +17,16 @@ public class GenreServiceImp implements GenreService {
             throw new IllegalArgumentException("Genre name cannot be empty");
         }
 
-        Genre existing = repository.getGenreByName(name);
+        Genre existing = repository.getGenreByNameStrict(name);
         if (existing != null) {
             return existing;
+        }else{
+        Genre genre =  Genre.builder()
+                        .name(name)
+                        .build();
+        Genre newGenre = repository.createGenre(genre);
+        return newGenre;
         }
-
-        Genre genre = new Genre(name.trim());
-        repository.createGenre(genre);
-        return genre;
     }
 
     @Override
@@ -38,7 +40,7 @@ public class GenreServiceImp implements GenreService {
     }
 
     @Override
-    public Genre findByName(String name) {
+    public List<Genre> findByName(String name) {
         return repository.getGenreByName(name);
     }
 }
