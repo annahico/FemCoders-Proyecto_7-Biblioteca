@@ -10,6 +10,9 @@ public class MainMenu {
     private final BookView bookView = new BookView();
     private final BookController controller;
 
+    public static final String RED = "\u001B[31m";
+    public static final String RESET = "\u001B[0m";
+
     public MainMenu(BookController controller) {
         this.controller = controller;
     }
@@ -62,6 +65,9 @@ public class MainMenu {
                 System.out.println("Listing all books...");
                 List<Book> allBooks = controller.getAllBooks();
                 bookView.displayBooksBrief(allBooks);
+                System.out.println();
+                System.out.println("\u001B[38;5;218mScroll up to see the book list\u001B[0m");
+
             }
             case 2 -> {
                 Book newBook = bookView.getNewBookData();
@@ -79,8 +85,6 @@ public class MainMenu {
                 } else {
                     System.out.println("Book not found with ID: " + id);
                 }
-
-                System.out.println("Editing logic ready, waiting for service.findById()");
             }
             case 4 -> {
                 int id = bookView.askForBookId("Delete");
@@ -91,20 +95,22 @@ public class MainMenu {
                 String title = ConsoleUtils.stringInput("Enter Title to search: ", 200);
                 List<Book> results = controller.findByTitle(title);
                 bookView.searchBooks(results);
+                System.out.println("These are the results found from: " + title);
             }
             case 6 -> {
                 String author = ConsoleUtils.stringInput("Enter Author to search: ", 100);
                 List<Book> results = controller.findByAuthor(author);
                 bookView.searchBooks(results);
-                System.out.println("Searching for books by: " + author);
+                System.out.println("These are the results found from: " + author);
             }
             case 7 -> {
                 String genre = ConsoleUtils.stringInput("Enter Genre to search: ", 50);
                 List<Book> results = controller.findByGenre(genre);
                 bookView.displayBooksByGenre(results);
+                System.out.println("These are the results found from: " + genre);
             }
             case 0 -> System.out.println("Exiting the system... Goodbye!");
-            default -> System.out.println("Invalid Option. Please try again.");
+            default -> System.out.println( RED + "Invalid Option. Please try again." + RESET );
         }
     }
 
