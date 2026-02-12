@@ -1,8 +1,6 @@
 package com.library.views;
-
 import java.util.List;
 import java.util.Random;
-
 import com.library.controller.BookController;
 import com.library.model.Book;
 
@@ -16,8 +14,6 @@ public class MainMenu {
     public static final String LILA = "\u001B[35;3m";
     public static final String ROSA = "\u001B[38;5;218m";
     public static final String GREEN = "\u001B[32m";
-
-
 
     public MainMenu(BookController controller) {
         this.controller = controller;
@@ -61,7 +57,6 @@ public class MainMenu {
             selected(option);
 
             System.out.println();
-
         }
     }
 

@@ -1,5 +1,4 @@
 package com.library.service;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -7,8 +6,7 @@ import com.library.model.Author;
 import com.library.model.Book;
 import com.library.model.Genre;
 import com.library.repository.BookRepository;
-//import com.library.service.AuthorService;
-//import com.library.service.GenreService;
+
 public class BookServiceImpl implements BookService {
     private final BookRepository bookRepository;
     private final AuthorService authorService;
@@ -56,7 +54,6 @@ public class BookServiceImpl implements BookService {
     public void updateBook(Book book) {
 
         validateBook(book);
-
         Book existing = bookRepository.getBookbyId(book.getId());
         if (existing == null) {
             throw new IllegalArgumentException(RED+"Book not found"+RESET);
@@ -85,12 +82,6 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public void deleteBook(int id) {
-
-        // Book book = bookRepository.getBookbyId(id);
-        // if (book == null) {
-        //     throw new IllegalArgumentException("Book not found with ID: " + id);
-        // }
-        
 
         bookRepository.deleteBookAuthors(id);
         bookRepository.deleteBookGenres(id);

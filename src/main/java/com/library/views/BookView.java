@@ -1,5 +1,4 @@
 package com.library.views;
-
 import java.util.List;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
@@ -84,17 +83,12 @@ public class BookView {
 
                 } else {
                     System.out.println(RED + "Please select Y or N" + RESET);
-
                 }
-
             }
-
         }
 
         List<Genre> genres = new ArrayList<>();
-
         boolean addGenre = true;
-
         while (addGenre == true) {
 
             String genreName = ConsoleUtils.stringInput("Genre Name: ", 50);
@@ -111,17 +105,12 @@ public class BookView {
 
                     addGenre = false;
                     validResponse = true;
-
                 } else if (moreGenres.equalsIgnoreCase("Y")) {
                     validResponse = true;
-
                 } else {
                     System.out.println(RED + "Please select Y or N" + RESET);
-
                 }
-
             }
-
         }
 
         String isbn = ConsoleUtils.stringInput("ISBN: ", 17, "^[0-9-]{10,17}$");
