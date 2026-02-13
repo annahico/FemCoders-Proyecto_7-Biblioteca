@@ -1,4 +1,5 @@
 package com.library.repository;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -41,7 +42,7 @@ class BookRepositoryImplTest {
     @BeforeEach
     void configurarTest() {
         repository = new BookRepositoryImpl();
-        
+
         autorTest = Author.builder()
                 .id(1)
                 .fullName("Franz Kafka")
@@ -58,7 +59,7 @@ class BookRepositoryImplTest {
                 .isbn("978-0-000-00008-0")
                 .description("Un hombre se despierta transformado en insecto")
                 .build();
-        
+
         libroTest.getAuthors().add(autorTest);
         libroTest.getGenres().add(generoTest);
     }
@@ -66,7 +67,7 @@ class BookRepositoryImplTest {
     @Test
     void debeCrearUnLibro() throws SQLException {
         try (MockedStatic<DBManager> dbManagerMock = mockStatic(DBManager.class)) {
-     
+
             dbManagerMock.when(DBManager::getConnection).thenReturn(mockConnection);
             when(mockConnection.prepareStatement(anyString(), eq(Statement.RETURN_GENERATED_KEYS)))
                     .thenReturn(mockPreparedStatement);
@@ -93,7 +94,6 @@ class BookRepositoryImplTest {
             dbManagerMock.when(DBManager::getConnection).thenReturn(mockConnection);
             when(mockConnection.prepareStatement(anyString())).thenReturn(mockPreparedStatement);
             when(mockPreparedStatement.executeQuery()).thenReturn(mockResultSet);
-            
             when(mockResultSet.next()).thenReturn(true);
             when(mockResultSet.getInt("id")).thenReturn(1);
             when(mockResultSet.getString("title")).thenReturn("La Metamorfosis");
@@ -130,11 +130,10 @@ class BookRepositoryImplTest {
     @Test
     void debeListarTodosLosLibros() throws SQLException {
         try (MockedStatic<DBManager> dbManagerMock = mockStatic(DBManager.class)) {
-  
+
             dbManagerMock.when(DBManager::getConnection).thenReturn(mockConnection);
             when(mockConnection.prepareStatement(anyString())).thenReturn(mockPreparedStatement);
             when(mockPreparedStatement.executeQuery()).thenReturn(mockResultSet);
-
             when(mockResultSet.next()).thenReturn(true, true, false);
             when(mockResultSet.getInt("id")).thenReturn(1, 2);
             when(mockResultSet.getString("title")).thenReturn("Libro 1", "Libro 2");
@@ -151,15 +150,13 @@ class BookRepositoryImplTest {
         }
     }
 
-
     @Test
     void debeBuscarLibrosPorTitulo() throws SQLException {
         try (MockedStatic<DBManager> dbManagerMock = mockStatic(DBManager.class)) {
-       
+
             dbManagerMock.when(DBManager::getConnection).thenReturn(mockConnection);
             when(mockConnection.prepareStatement(anyString())).thenReturn(mockPreparedStatement);
             when(mockPreparedStatement.executeQuery()).thenReturn(mockResultSet);
-            
             when(mockResultSet.next()).thenReturn(true, false);
             when(mockResultSet.getInt("id")).thenReturn(1);
             when(mockResultSet.getString("title")).thenReturn("La Metamorfosis");
@@ -180,7 +177,7 @@ class BookRepositoryImplTest {
     @Test
     void debeActualizarUnLibro() throws SQLException {
         try (MockedStatic<DBManager> dbManagerMock = mockStatic(DBManager.class)) {
-       
+
             dbManagerMock.when(DBManager::getConnection).thenReturn(mockConnection);
             when(mockConnection.prepareStatement(anyString())).thenReturn(mockPreparedStatement);
             when(mockPreparedStatement.executeUpdate()).thenReturn(1);
@@ -201,7 +198,7 @@ class BookRepositoryImplTest {
     @Test
     void debeEliminarUnLibro() throws SQLException {
         try (MockedStatic<DBManager> dbManagerMock = mockStatic(DBManager.class)) {
-           
+
             dbManagerMock.when(DBManager::getConnection).thenReturn(mockConnection);
             when(mockConnection.prepareStatement(anyString())).thenReturn(mockPreparedStatement);
             when(mockPreparedStatement.executeUpdate()).thenReturn(1);
@@ -216,7 +213,7 @@ class BookRepositoryImplTest {
     @Test
     void debeGuardarAutoresDelLibro() throws SQLException {
         try (MockedStatic<DBManager> dbManagerMock = mockStatic(DBManager.class)) {
-          
+
             dbManagerMock.when(DBManager::getConnection).thenReturn(mockConnection);
             when(mockConnection.prepareStatement(anyString())).thenReturn(mockPreparedStatement);
             when(mockPreparedStatement.executeBatch()).thenReturn(new int[]{1});
@@ -231,7 +228,7 @@ class BookRepositoryImplTest {
     @Test
     void debeGuardarGenerosDelLibro() throws SQLException {
         try (MockedStatic<DBManager> dbManagerMock = mockStatic(DBManager.class)) {
-         
+
             dbManagerMock.when(DBManager::getConnection).thenReturn(mockConnection);
             when(mockConnection.prepareStatement(anyString())).thenReturn(mockPreparedStatement);
             when(mockPreparedStatement.executeBatch()).thenReturn(new int[]{1});
@@ -246,7 +243,7 @@ class BookRepositoryImplTest {
     @Test
     void debeEliminarAutoresDelLibro() throws SQLException {
         try (MockedStatic<DBManager> dbManagerMock = mockStatic(DBManager.class)) {
-            
+
             dbManagerMock.when(DBManager::getConnection).thenReturn(mockConnection);
             when(mockConnection.prepareStatement(anyString())).thenReturn(mockPreparedStatement);
             when(mockPreparedStatement.executeUpdate()).thenReturn(1);
@@ -261,7 +258,7 @@ class BookRepositoryImplTest {
     @Test
     void debeEliminarGenerosDelLibro() throws SQLException {
         try (MockedStatic<DBManager> dbManagerMock = mockStatic(DBManager.class)) {
-           
+
             dbManagerMock.when(DBManager::getConnection).thenReturn(mockConnection);
             when(mockConnection.prepareStatement(anyString())).thenReturn(mockPreparedStatement);
             when(mockPreparedStatement.executeUpdate()).thenReturn(1);
