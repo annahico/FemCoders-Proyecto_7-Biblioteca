@@ -223,34 +223,3 @@ SELECT
     (SELECT COUNT(*) FROM authors) AS total_authors,
     (SELECT COUNT(*) FROM genres) AS total_genres;
 
-
--- ================================================
--- NOTAS PARA INGRID (Repository):
---
--- 1. ILIKE vs LIKE:
---    - ILIKE = case-insensitive (no importa mayúsculas/minúsculas)
---    - LIKE = case-sensitive
---    Usar ILIKE para búsquedas más flexibles
---
--- 2. El símbolo % en las búsquedas:
---    - '%fantasy%' = encuentra "fantasy" en cualquier parte
---    - 'fantasy%' = encuentra "fantasy" al inicio
---    - '%fantasy' = encuentra "fantasy" al final
---
--- 3. PreparedStatement en Java:
---    Reemplazar los valores fijos con ? y usar setString(), setInt(), etc.
---    Ejemplo: WHERE b.title ILIKE ?
---    Y en Java: pstmt.setString(1, "%" + searchTerm + "%");
---
--- 4. RETURNING id:
---    Después de un INSERT, devuelve el ID generado automáticamente
---    Muy útil para obtener el ID del libro recién creado
---
--- 5. STRING_AGG:
---    Junta múltiples valores en uno solo separados por comas
---    Perfecto para mostrar todos los géneros de un libro
---
--- 6. CASCADE:
---    Al eliminar un libro, automáticamente elimina sus conexiones
---    en books_authors y books_genres (definido en CREATE TABLE)
--- ================================================
