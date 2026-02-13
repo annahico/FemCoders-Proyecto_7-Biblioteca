@@ -74,11 +74,11 @@ ORDER BY b.title, g.name;
 -- Esta es la query principal que muestra todo
 -- ================================================
 SELECT
-    b.id,
-    b.title AS título,
-    b.isbn,
-    a.full_name AS autor,
-    ARRAY_TO_STRING(ARRAY_AGG(DISTINCT g.name ORDER BY g.name), ', ') AS géneros
+b.id,
+b.title AS title,
+b.isbn,
+a.full_name AS author,
+ARRAY_TO_STRING(ARRAY_AGG(DISTINCT g.name ORDER BY g.name), ', ') AS genre
 FROM books b
 LEFT JOIN books_authors ba ON b.id = ba.book_id
 LEFT JOIN authors a ON a.id = ba.author_id
@@ -130,9 +130,9 @@ ORDER BY b.id;
 SELECT 
     COUNT(*) AS libros_sin_autor,
     CASE 
-        WHEN COUNT(*) = 0 THEN 'OK: Todos los libros tienen autor'
-        ELSE 'ERROR: Hay libros sin autor asignado'
-    END AS estado
+        WHEN COUNT(*) = 0 THEN 'OK: All books have an author'
+        ELSE 'ERROR: There are books without an assigned author'
+    END AS status
 FROM books b
 LEFT JOIN books_authors ba ON b.id = ba.book_id
 WHERE ba.author_id IS NULL;
@@ -143,38 +143,38 @@ WHERE ba.author_id IS NULL;
 
 -- 1. Verificar libros sin géneros
 SELECT 
-    COUNT(*) AS libros_sin_genero,
+    COUNT(*) AS books_without_genre,
     CASE 
-        WHEN COUNT(*) = 0 THEN 'OK: Todos los libros tienen género'
-        ELSE 'ADVERTENCIA: Hay libros sin género asignado'
-    END AS estado
+        WHEN COUNT(*) = 0 THEN 'OK: All books have a genre'
+        ELSE 'WARNING: Some books have no assigned genre'
+    END AS status
 FROM books b
 LEFT JOIN books_genres bg ON b.id = bg.book_id
 WHERE bg.genre_id IS NULL;
 
 -- 2. Verificar autores sin libros
 SELECT 
-    COUNT(*) AS autores_sin_libros,
+    COUNT(*) AS authors_without_books,
     CASE 
-        WHEN COUNT(*) = 0 THEN 'OK: Todos los autores tienen libros'
-        ELSE 'ADVERTENCIA: Hay autores sin libros asignados'
-    END AS estado
+        WHEN COUNT(*) = 0 THEN 'OK: All authors have books'
+        ELSE 'WARNING: Some authors have no assigned books'
+    END AS status
 FROM authors a
 LEFT JOIN books_authors ba ON a.id = ba.author_id
 WHERE ba.book_id IS NULL;
 
 -- 3. Contar total de libros
-SELECT COUNT(*) AS total_libros FROM books;
+SELECT COUNT(*) AS total_books FROM books;
 
 -- 4. Mostrar distribución de libros por autor
 SELECT 
-    a.full_name AS autor,
-    COUNT(b.id) AS cantidad_libros
+    a.full_name AS author,
+    COUNT(b.id) AS book_count
 FROM authors a
 LEFT JOIN books_authors ba ON a.id = ba.author_id
 LEFT JOIN books b ON ba.book_id = b.id
 GROUP BY a.id, a.full_name
-ORDER BY cantidad_libros DESC, a.full_name;
+ORDER BY book_count DESC, a.full_name;
 
 
 -- ================================================
@@ -188,11 +188,11 @@ WHERE bg.genre_id IS NULL
 ORDER BY b.id;
 
 SELECT 
-    COUNT(*) AS libros_sin_genero,
+    COUNT(*) AS books_without_genre,
     CASE 
-        WHEN COUNT(*) = 0 THEN 'PASÓ: Todos los libros tienen género'
-        ELSE 'FALLÓ: Hay libros sin género'
-    END AS estado
+        WHEN COUNT(*) = 0 THEN 'SUCCESS: All books have genre'
+        ELSE 'FAILED: There are books without genre'
+    END AS status
 FROM books b
 LEFT JOIN books_genres bg ON b.id = bg.book_id
 WHERE bg.genre_id IS NULL;
@@ -204,22 +204,22 @@ WHERE bg.genre_id IS NULL;
 -- VERIFICACIÓN 11: Estadísticas generales
 -- ================================================
 SELECT 
-    'Total de libros' AS estadística,
-    COUNT(*) AS valor
+    'Total number of books' AS statistic,
+    COUNT(*) AS value
 FROM books
 UNION ALL
 SELECT 
-    'Total de autores',
+    'Total number of authors',
     COUNT(*)
 FROM authors
 UNION ALL
 SELECT 
-    'Total de géneros',
+    'Total number of genres',
     COUNT(*)
 FROM genres
 UNION ALL
 SELECT 
-    'Promedio de géneros por libro',
+    'Average number of genres per book',
     ROUND(AVG(genre_count), 2)
 FROM (
     SELECT book_id, COUNT(*) AS genre_count
@@ -232,30 +232,30 @@ FROM (
 -- VERIFICACIÓN 12: Integridad de ISBN
 -- Verificar que no hay ISBNs duplicados
 -- ================================================
-SELECT '=== VERIFICACIÓN 12 ===' AS titulo;
+SELECT '=== VERIFICATION 12 ===' AS title;
 
 SELECT
     isbn,
-    COUNT(*) AS veces,
+    COUNT(*) AS count,
     CASE
-        WHEN COUNT(*) > 1 THEN 'DUPLICADO'
-        ELSE 'ÚNICO'
-    END AS estado
+        WHEN COUNT(*) > 1 THEN 'DUPLICATE'
+        ELSE 'UNIQUE'
+    END AS status
 FROM books
 GROUP BY isbn
 HAVING COUNT(*) > 1
-ORDER BY veces DESC, isbn;
+ORDER BY count DESC, isbn;
 
 SELECT
     CASE
-        WHEN COUNT(*) = 0 THEN 'NO HAY ISBNs DUPLICADOS'
-        ELSE CONCAT('HAY ', COUNT(*)::text, ' ISBNs DUPLICADOS')
-    END AS resultado_final
+        WHEN COUNT(*) = 0 THEN 'THERE ARE NO DUPLICATE ISBNs'
+        ELSE CONCAT('THERE ARE ', COUNT(*)::text, ' DUPLICATE ISBNs')
+    END AS final_result
 FROM (
     SELECT isbn
     FROM books
     GROUP BY isbn
     HAVING COUNT(*) > 1
-) AS duplicados;
+) AS duplicates;
 
 -- Resultado esperado: 0 filas (cada ISBN debe ser único)

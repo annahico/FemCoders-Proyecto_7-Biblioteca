@@ -23,7 +23,6 @@ CREATE TABLE books
     title VARCHAR(255) NOT NULL,
     isbn VARCHAR(17) UNIQUE,
     description VARCHAR(200),
-    publication_date DATE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

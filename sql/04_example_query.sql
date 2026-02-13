@@ -117,7 +117,7 @@ GROUP BY b.id, b.title, b.isbn, b.description, b.created_at, b.updated_at, a.ful
 -- QUERY 6: AÑADIR UN NUEVO LIBRO (PASO 1 - Insertar libro)
 -- ================================================
 INSERT INTO books (title, isbn, description)
-VALUES ('Nuevo Libro', '978-0-000-99999-9', 'Descripción del libro')
+VALUES ('New Book', '978-0-000-99999-9', 'Book description')
 RETURNING id;  -- Devuelve el ID del libro recién creado
 
 
@@ -125,11 +125,11 @@ RETURNING id;  -- Devuelve el ID del libro recién creado
 -- QUERY 7: AÑADIR UN NUEVO AUTOR (si no existe)
 -- ================================================
 -- Primero verificar si el autor ya existe:
-SELECT id FROM authors WHERE full_name = 'Nombre Completo';
+SELECT id FROM authors WHERE full_name = 'Full Name';
 
 -- Si NO existe, insertarlo:
 INSERT INTO authors (full_name)
-VALUES ('Nombre Completo')
+VALUES ('Full Name')
 RETURNING id;
 
 
@@ -145,11 +145,11 @@ VALUES (13, 1);  -- book_id = ID del nuevo libro, author_id = ID del autor
 -- QUERY 9: AÑADIR GÉNERO (si no existe)
 -- ================================================
 -- Primero verificar si el género ya existe:
-SELECT id FROM genres WHERE name = 'Nombre del Género';
+SELECT id FROM genres WHERE name = 'Genre Name';
 
 -- Si NO existe, insertarlo:
 INSERT INTO genres (name)
-VALUES ('Nombre del Género')
+VALUES ('Genre Name')
 RETURNING id;
 
 
@@ -162,13 +162,13 @@ VALUES (13, 1);  -- book_id = ID del libro, genre_id = ID del género
 
 
 -- ================================================
--- QUERY 11: ACTUALIZAR UN LIBRO
+-- QUERY 11: ACTUALIZAR UN LIBRO VVV
 -- ================================================
 UPDATE books
 SET
-    title = 'Título Actualizado',
+    title = 'Updated Title',
     isbn = '978-0-000-88888-8',
-    description = 'Nueva descripción',
+    description = 'New description',
     updated_at = CURRENT_TIMESTAMP
 WHERE id = 1;
 
@@ -223,34 +223,3 @@ SELECT
     (SELECT COUNT(*) FROM authors) AS total_authors,
     (SELECT COUNT(*) FROM genres) AS total_genres;
 
-
--- ================================================
--- NOTAS PARA INGRID (Repository):
---
--- 1. ILIKE vs LIKE:
---    - ILIKE = case-insensitive (no importa mayúsculas/minúsculas)
---    - LIKE = case-sensitive
---    Usar ILIKE para búsquedas más flexibles
---
--- 2. El símbolo % en las búsquedas:
---    - '%fantasy%' = encuentra "fantasy" en cualquier parte
---    - 'fantasy%' = encuentra "fantasy" al inicio
---    - '%fantasy' = encuentra "fantasy" al final
---
--- 3. PreparedStatement en Java:
---    Reemplazar los valores fijos con ? y usar setString(), setInt(), etc.
---    Ejemplo: WHERE b.title ILIKE ?
---    Y en Java: pstmt.setString(1, "%" + searchTerm + "%");
---
--- 4. RETURNING id:
---    Después de un INSERT, devuelve el ID generado automáticamente
---    Muy útil para obtener el ID del libro recién creado
---
--- 5. STRING_AGG:
---    Junta múltiples valores en uno solo separados por comas
---    Perfecto para mostrar todos los géneros de un libro
---
--- 6. CASCADE:
---    Al eliminar un libro, automáticamente elimina sus conexiones
---    en books_authors y books_genres (definido en CREATE TABLE)
--- ================================================

@@ -1,20 +1,21 @@
 package com.library.repository;
-
-import com.library.model.Book;
+import java.util.List;
 import com.library.model.Genre;
 
 public interface GenreRepository {
 
- public void createGenre(Genre genre);
+     Genre createGenre(Genre genre);
 
-    public Genre getGenreById(int id);
+     Genre getGenreById(int id);
 
-    public Genre getGenreByName(String name);
+     List<Genre> getGenreByName(String name);
 
-    public Book getBookbyGenre(Genre genre); //mismo q en author, debería devolver un array
+     Genre getGenreByNameStrict (String  name);
 
-    public void updateGenre(Genre genre);
+     List<Genre> getGenres();
 
-    public void deleteGenre(int id);
+     void updateGenre(Genre genre);
+
+     void deleteGenre(int id);
 
 }

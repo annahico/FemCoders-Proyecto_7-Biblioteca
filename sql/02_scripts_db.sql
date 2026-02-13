@@ -62,65 +62,65 @@ VALUES
 INSERT INTO books
     (title, isbn, description)
 VALUES
-    ('Alchemised', '978-0-000-00001-0', 'A thrilling tale of dark romance and espionage');
+    ('Alchemised', '978-0-000-00001-0', 'Una emocionante historia de romance oscuro y espionaje.');
 
 INSERT INTO books
     (title, isbn, description)
 VALUES
-    ('Seis de Cuervos', '978-0-451-65790-5', 'Six dangerous outcasts attempt an impossible heist');
+    ('Seis de Cuervos', '978-0-451-65790-5', 'Seis peligrosos marginados intentan un robo imposible');
 
 INSERT INTO books
     (title, isbn, description)
 VALUES
-    ('Trono de los Caidos, El', '978-0-000-00003-0', 'A gothic romantasy with dark secrets and forbidden love');
+    ('Trono de los Caidos, El', '978-0-000-00003-0', 'Un romántico y gótico cuento con secretos oscuros y amor prohibido');
 
 -- Ingrid's books
 INSERT INTO books
     (title, isbn, description)
 VALUES
-    ('Puertas de Piedra, Las ', '978-0-000-00004-0', 'An epic journey through a world of magic and mystery');
+    ('Puertas de Piedra, Las ', '978-0-000-00004-0', 'Una emocionante aventura a través de un mundo de magia y misterio');
 
 INSERT INTO books
     (title, isbn, description)
 VALUES
-    ('Carry On', '978-1-250-05552-0', 'A magical reimagining of classic fantasy tropes');
+    ('Carry On', '978-1250049551', 'A magical reimagining of classic fantasy stereotypes');
 
 INSERT INTO books
     (title, isbn, description)
 VALUES
-    ('Ocho, El ', '978-0-000-00006-0', 'A suspenseful journey blending past and present');
+    ('Ocho, El ', '978-0-000-00006-0', 'Una emocionante travesía que mezcla el pasado y el presente');
 
 -- Geraldine's books
 INSERT INTO books
     (title, isbn, description)
 VALUES
-    ('Principito, El ', '978-0-465-06959-7', 'A timeless story about love, loss and the meaning of life');
+    ('Principito, El ', '978-0-465-06959-7', 'Una historia atemporal sobre amor, pérdida y el significado de la vida');
 
 INSERT INTO books
     (title, isbn, description)
 VALUES
-    ('Metamorfosis, La ', '978-0-000-00008-0', 'A man wakes up one morning transformed into an insect');
+    ('Metamorfosis, La ', '978-0-000-00008-0', 'Un hombre despierta una mañana transformado en un insecto');
 
 INSERT INTO books
     (title, isbn, description)
 VALUES
-    ('Alquimista, El ', '978-0-062-31609-7', 'A shepherd boy searches for treasure and finds his destiny');
+    ('Alquimista, El ', '978-0-062-31609-7', 'Un pastor boy busca tesoro y encuentra su destino');
 
 -- Leonela's books
 INSERT INTO books
     (title, isbn, description)
 VALUES
-    ('Jane Eyre', '978-0-141-24081-5', 'An independent young woman finds love in a gothic mansion');
+    ('Jane Eyre', '978-0-141-24081-5', 'Una joven independiente encuentra el amor en una mansión gótica.');
 
 INSERT INTO books
     (title, isbn, description)
 VALUES
-    ('Animales Fantasticos y Donde Encontrarlos', '978-0-439-70818-8', 'A guide to magical creatures in the wizarding world');
+    ('Animales Fantasticos y Donde Encontrarlos', '978-0-439-70818-8', 'Una guía sobre criaturas mágicas en el mundo mágico');
 
 INSERT INTO books
     (title, isbn, description)
 VALUES
-    ('Crying in H Mart', '978-0-525-55918-4', 'A memoir about identity, grief and Korean food');
+    ('Crying in H Mart', '978-0-525-55918-4', 'Un recuerdo sobre identidad, dolor y comida coreana');
 
 
 -- ================================================
@@ -151,7 +151,11 @@ VALUES
         WHERE full_name = 'Patrick Rothfuss')),
     ((SELECT id
         FROM books
-        WHERE isbn = '978-1-250-05552-0'), (SELECT id
+<<<<<<< HEAD
+        WHERE isbn = '978-12500495510'), (SELECT id
+=======
+        WHERE isbn = '978-1250049551'), (SELECT id
+>>>>>>> 0b82fe936ab4c94132b6a0d1056eef729b8009f3
         FROM authors
         WHERE full_name = 'Rainbow Rowell')),
     ((SELECT id
@@ -281,17 +285,17 @@ INSERT INTO books_genres
 VALUES
     ((SELECT id
         FROM books
-        WHERE isbn = '978-1-250-05552-0'), (SELECT id
+        WHERE isbn = '978-1250049551'), (SELECT id
         FROM genres
         WHERE name = 'Novel')),
     ((SELECT id
         FROM books
-        WHERE isbn = '978-1-250-05552-0'), (SELECT id
+        WHERE isbn = '978-1250049551'), (SELECT id
         FROM genres
         WHERE name = 'Fantasy Literature')),
     ((SELECT id
         FROM books
-        WHERE isbn = '978-1-250-05552-0'), (SELECT id
+        WHERE isbn = '978-1250049551'), (SELECT id
         FROM genres
         WHERE name = 'Urban Fantasy'));
 

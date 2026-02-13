@@ -1,21 +1,35 @@
 package com.library.repository;
 
+import java.util.List;
+
 import com.library.model.Book;
 
 public interface BookRepository {
 
-    public void createBook(Book book);
+    void createBook(Book book);
 
-    public Book getBook(Book book);
+    void saveBookAuthors(Book book);
 
-    public Book getBookbyId (int id);
+    void saveBookGenres(Book book);
 
-    public Book getBookbyTitle(String title);
+    List<Book> getBookList();
 
-    public Book getBookByIsbn(String isbn);
+    Book getBookbyId(int id);
 
-    public void updateBook(Book book);
+    List<Book> getBookbyTitle(String title);
 
-    public void deleteBook(int id);
+    Book getBookByIsbn(String isbn);
+
+    List<Book> getBooksByAuthor(String name);
+
+    List<Book> getBooksByGenre(String genre);
+
+    void updateBook(Book book);
+
+    void deleteBook(int id);
+
+    void deleteBookAuthors(int bookId);
+
+    void deleteBookGenres(int bookId);
 
 }
