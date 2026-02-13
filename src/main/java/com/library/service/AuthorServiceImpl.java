@@ -1,8 +1,6 @@
 package com.library.service;
-
 import java.util.List;
 import com.library.model.Author;
-//import com.library.model.Book;
 import com.library.repository.AuthorRepository;
 
 public class AuthorServiceImpl implements AuthorService {
@@ -17,7 +15,6 @@ public class AuthorServiceImpl implements AuthorService {
         if (name == null || name.trim().isEmpty()) {
             throw new IllegalArgumentException("Author name cannot be empty");
         }
-
         Author existing = repository.getAuthorByNameStrict(name);
         if (existing != null) {
             return existing;
@@ -28,11 +25,6 @@ public class AuthorServiceImpl implements AuthorService {
         Author newAuthor = repository.createAuthor(author);
         return newAuthor;}
     }
-
-    // @Override
-    // public List<Author> getAllAuthors() {
-    //     return repository.getBooksbyAuthor();//consultar
-    // }
 
     @Override
     public Author findById(int id) {

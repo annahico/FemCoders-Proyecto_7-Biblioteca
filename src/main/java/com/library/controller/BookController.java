@@ -1,5 +1,4 @@
 package com.library.controller;
-
 import java.util.List;
 import com.library.model.Book;
 import com.library.service.BookService;
@@ -43,4 +42,3 @@ public class BookController {
         return bookService.findByGenre(genre);
     }
 }
-

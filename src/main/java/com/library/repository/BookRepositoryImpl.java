@@ -1,5 +1,4 @@
 package com.library.repository;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -7,13 +6,15 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-
 import com.library.config.DBManager;
 import com.library.model.Author;
 import com.library.model.Book;
 import com.library.model.Genre;
 
 public class BookRepositoryImpl implements BookRepository {
+     public static final String RED = "\u001B[31m";
+     public static final String RESET = "\u001B[0m";
+     public static final String GREEN = "\u001B[32m";
 
     @Override
     public void createBook(Book book) {
@@ -35,7 +36,7 @@ public class BookRepositoryImpl implements BookRepository {
                 }
             }
         } catch (SQLException e) {
-            throw new RuntimeException("error in book creation" + e.getMessage());
+            throw new RuntimeException(RED + "error in book creation" + e.getMessage() + RESET);
         }
     }
 
@@ -52,7 +53,7 @@ public class BookRepositoryImpl implements BookRepository {
                 st.executeBatch();
             }
         } catch (SQLException e) {
-            throw new RuntimeException("Error to save relationships in book: " + e.getMessage());
+            throw new RuntimeException(RED + "Error to save relationships in book: " + e.getMessage() + RESET);
         }
     }
 
@@ -69,7 +70,7 @@ public class BookRepositoryImpl implements BookRepository {
                 st.executeBatch();
             }
         } catch (SQLException e) {
-            throw new RuntimeException("Error to save relationships in book: " + e.getMessage());
+            throw new RuntimeException(RED + "Error to save relationships in book: " + e.getMessage() + RESET);
         }
     }
 
@@ -98,7 +99,7 @@ public class BookRepositoryImpl implements BookRepository {
                 }
             }
         } catch (SQLException e) {
-            throw new RuntimeException("error obtains the book by id" + e.getMessage());
+            throw new RuntimeException(RED + "error obtains the book by id" + e.getMessage() + RESET);
         }
         return list;
     }
@@ -129,7 +130,7 @@ public class BookRepositoryImpl implements BookRepository {
                 }
             }
         } catch (SQLException e) {
-            throw new RuntimeException("error obtains the book by id" + e.getMessage());
+            throw new RuntimeException(RED + "error obtains the book by id" + e.getMessage() + RESET);
         }
         return book;
     }
@@ -163,7 +164,7 @@ public class BookRepositoryImpl implements BookRepository {
                 }
             }
         } catch (SQLException e) {
-            throw new RuntimeException("error obtains books by title" + e.getMessage());
+            throw new RuntimeException(RED + "error obtains books by title" + e.getMessage() + RESET);
         }
         return books;
     }
@@ -194,7 +195,7 @@ public class BookRepositoryImpl implements BookRepository {
                 }
             }
         } catch (SQLException e) {
-            throw new RuntimeException("error obtains the book by id" + e.getMessage());
+            throw new RuntimeException(RED + "error obtains the book by id" + e.getMessage() + RESET);
         }
         return book;
     }
@@ -233,7 +234,7 @@ public class BookRepositoryImpl implements BookRepository {
                 }
             }
         } catch (SQLException e) {
-            throw new RuntimeException("error obtains books by author" + e.getMessage());
+            throw new RuntimeException(RED + "error obtains books by author" + e.getMessage() + RESET);
         }
         return booksByAuthor;
     }
@@ -275,7 +276,7 @@ public class BookRepositoryImpl implements BookRepository {
                 }
             }
         } catch (SQLException e) {
-            throw new RuntimeException("error obtains books by author" + e.getMessage());
+            throw new RuntimeException(RED + "error obtains books by author" + e.getMessage() + RESET);
         }
         return booksByGenre;
     }
@@ -301,12 +302,11 @@ public class BookRepositoryImpl implements BookRepository {
             int rowsUpdated = st.executeUpdate();
 
             if (rowsUpdated == 0) {
-                System.out.println("The book with id: " + book.getId() + " is not found ");
+                System.out.println(RED + "The book with id: " + book.getId() + " is not found " + RESET);
             }
         } catch (SQLException e) {
-            throw new RuntimeException("error" + e.getMessage());
+            throw new RuntimeException(RED + "error" + e.getMessage() + RESET);
         }
-
     }
 
     @Override
@@ -319,10 +319,10 @@ public class BookRepositoryImpl implements BookRepository {
             int rowsDeleted = st.executeUpdate();
 
             if (rowsDeleted > 0) {
-                System.out.println("The book with ID " + id + " has been deleted succesfully.");
+                System.out.println(GREEN +"The book with ID " + id + " has been deleted succesfully." + RESET);
             }
         } catch (SQLException e) {
-            throw new RuntimeException("error" + e.getMessage());
+            throw new RuntimeException(RED + "error" + e.getMessage() + RESET);
         }
     }
 
@@ -335,7 +335,7 @@ public class BookRepositoryImpl implements BookRepository {
             st.setInt(1, bookId);
             st.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException("error" + e.getMessage());
+            throw new RuntimeException(RED + "error" + e.getMessage() + RESET);
         }
     }
 
@@ -348,7 +348,7 @@ public class BookRepositoryImpl implements BookRepository {
             st.setInt(1, bookId);
             st.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException("error" + e.getMessage());
+            throw new RuntimeException(RED + "error" + e.getMessage() + RESET);
         }
     }
 
