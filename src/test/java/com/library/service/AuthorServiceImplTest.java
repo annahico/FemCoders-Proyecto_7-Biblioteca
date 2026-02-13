@@ -27,10 +27,8 @@ class AuthorServiceImplTest {
         service = new AuthorServiceImpl(mockRepository);
     }
 
-    // TEST 1: Crear autor nuevo
     @Test
     void testCrearAutorNuevo() {
-        // Simular que NO existe
         when(mockRepository.getAuthorByNameStrict("Nuevo Autor")).thenReturn(null);
 
         Author autorCreado = Author.builder()
@@ -40,20 +38,16 @@ class AuthorServiceImplTest {
 
         when(mockRepository.createAuthor(any(Author.class))).thenReturn(autorCreado);
 
-        // Ejecutar
         Author resultado = service.createAuthorIfNotExists("Nuevo Autor");
 
-        // Verificar
         assertNotNull(resultado);
         assertEquals(10, resultado.getId());
         assertEquals("Nuevo Autor", resultado.getFullName());
         verify(mockRepository).createAuthor(any(Author.class));
     }
 
-    // TEST 2: Retornar autor existente
     @Test
     void testRetornarAutorExistente() {
-        // Simular que SÍ existe
         Author autorExistente = Author.builder()
                 .id(5)
                 .fullName("Franz Kafka")
@@ -61,20 +55,16 @@ class AuthorServiceImplTest {
 
         when(mockRepository.getAuthorByNameStrict("Franz Kafka")).thenReturn(autorExistente);
 
-        // Ejecutar
         Author resultado = service.createAuthorIfNotExists("Franz Kafka");
 
-        // Verificar
         assertNotNull(resultado);
         assertEquals(5, resultado.getId());
         assertEquals("Franz Kafka", resultado.getFullName());
         verify(mockRepository, never()).createAuthor(any(Author.class));
     }
 
-    // TEST 3: Lanzar excepción si nombre vacío
     @Test
     void testNombreVacio() {
-        // Ejecutar y verificar
         assertThrows(IllegalArgumentException.class, () -> {
             service.createAuthorIfNotExists("");
         });
@@ -88,7 +78,6 @@ class AuthorServiceImplTest {
         });
     }
 
-    // TEST 4: Buscar por ID
     @Test
     void testBuscarPorId() {
         Author autor = Author.builder()
@@ -98,16 +87,13 @@ class AuthorServiceImplTest {
 
         when(mockRepository.getAuthorById(1)).thenReturn(autor);
 
-        // Ejecutar
         Author resultado = service.findById(1);
 
-        // Verificar
         assertNotNull(resultado);
         assertEquals(1, resultado.getId());
         assertEquals("Paulo Coelho", resultado.getFullName());
     }
 
-    // TEST 5: Buscar por nombre
     @Test
     void testBuscarPorNombre() {
         List<Author> autores = Arrays.asList(
@@ -117,10 +103,8 @@ class AuthorServiceImplTest {
 
         when(mockRepository.getAuthorByName("Kafka")).thenReturn(autores);
 
-        // Ejecutar
         List<Author> resultado = service.findByName("Kafka");
 
-        // Verificar
         assertNotNull(resultado);
         assertEquals(2, resultado.size());
         assertEquals("Franz Kafka", resultado.get(0).getFullName());
