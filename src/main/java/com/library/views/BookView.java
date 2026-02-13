@@ -36,9 +36,11 @@ public class BookView {
                             + RESET);
             System.out.printf("ID: %-5d | Títle: %-20s%n", book.getId(), book.getTitle());
             System.out.printf("Author: %-19s | Genres: %-15s%n", authorsNames, genresNames);
+            System.out.println();
+            System.out.println("ISBN: " + book.getIsbn());
 
             if (showFullDetails) {
-                System.out.println("ISBN: " + book.getIsbn());
+              
                 System.out.println("Description: " + book.getDescription());
             }
             System.out.println(
@@ -113,7 +115,7 @@ public class BookView {
             }
         }
 
-        String isbn = ConsoleUtils.stringInput("ISBN: ", 17, "^[0-9-]{10,17}$");
+        String isbn = ConsoleUtils.stringInput("ISBN: (Must have 10 to 17 numbers or '-' ) ", 17, "^[0-9-]{10,17}$");
         String description = ConsoleUtils.stringInput("Description: ", 200);
 
         return Book.builder()
@@ -137,7 +139,7 @@ public class BookView {
                 ? existingBook.getAuthors()
                 : List.of(Author.builder().fullName(authorInput).build());
 
-        String isbnInput = ConsoleUtils.stringInputEdit("New ISBN [" + existingBook.getIsbn() + "]: ", 17);
+        String isbnInput = ConsoleUtils.stringInputEdit("New ISBN [" + existingBook.getIsbn() + "]: ", 17,"^[0-9-]{10,17}$" );
         String isbn = isbnInput.isEmpty() ? existingBook.getIsbn() : isbnInput;
 
         String descInput = ConsoleUtils.stringInputEdit("New Description: ", 200);
