@@ -1,8 +1,6 @@
 package com.library;
 import com.library.views.MainMenu;
-import com.library.controller.AuthorController;
 import com.library.controller.BookController;
-import com.library.controller.GenreController;
 import com.library.service.AuthorService;
 import com.library.service.AuthorServiceImpl;
 import com.library.service.BookService;
@@ -27,8 +25,6 @@ public class App {
         BookService service = new BookServiceImpl(bookRepository, authorService, genreService);
         
         BookController bController = new BookController(service);
-        GenreController gController = new GenreController(genreService);
-        AuthorController aController = new AuthorController(authorService);
         MainMenu menu = new MainMenu(bController);
         menu.show();
     }

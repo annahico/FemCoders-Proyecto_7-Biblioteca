@@ -1,7 +1,5 @@
 package com.library.repository;
-
 import java.util.List;
-
 import com.library.model.Genre;
 
 public interface GenreRepository {

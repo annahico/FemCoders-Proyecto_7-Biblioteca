@@ -1,5 +1,4 @@
 package com.library.views;
-
 import java.util.Scanner;
 
 public class ConsoleUtils {
@@ -28,7 +27,6 @@ public class ConsoleUtils {
             System.out.println("\u001B[31m Error: Number must be between " + min + " and " + max + ".\u001B[0m");
         }
     }
-
     
     public static String stringInputEdit(String prompt, int maxLength) {
     String input;
@@ -42,8 +40,6 @@ public class ConsoleUtils {
         System.out.println("\u001B[31m Error: Cannot be more than  " + maxLength + " characters.\u001B[0m");
     }
 }
-
-
 
     public static String stringInput(String prompt, int maxLength) {
     String input;
@@ -83,5 +79,4 @@ public class ConsoleUtils {
             System.out.println("\u001B[31m Error: Cannot be exceed " + maxLength + " characters.\u001B[0m");
         }
     }
-
 }
