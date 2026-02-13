@@ -19,7 +19,7 @@
 ## 📖 General Info
 This project is a **Library Inventory Management System** built using the **MVC** (Model-View-Controller) architecture. It is designed to help local libraries modernize their management by allowing administrators to track books, authors, and genres through a terminal-based interface with persistent PostgreSQL storage.
 
-**Project Status:** 🚧 In Progress (Core DB connection and Book Listing active).
+![UserFlow](/docs/IMG/UserFlow.png)
 
 ---
 
