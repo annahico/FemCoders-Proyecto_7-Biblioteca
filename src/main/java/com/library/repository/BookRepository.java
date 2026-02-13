@@ -33,4 +33,3 @@ public interface BookRepository {
     void deleteBookGenres(int bookId);
 
 }
-

@@ -9,4 +9,3 @@ public interface GenreService {
     Genre findById(int id);
     List<Genre> findByName(String name);
 }
-

@@ -42,4 +42,3 @@ public class BookController {
         return bookService.findByGenre(genre);
     }
 }
-
