@@ -1,5 +1,4 @@
 package com.library.repository;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -7,13 +6,12 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-
 import com.library.config.DBManager;
 import com.library.model.Genre;
 
 public class GenreRepositoryImpl implements GenreRepository {
 
-    public void createGenre(Genre genre) {
+    public Genre createGenre(Genre genre) {
 
         String sql = "INSERT INTO genres (name) VALUES (?)";
         try (
@@ -31,6 +29,7 @@ public class GenreRepositoryImpl implements GenreRepository {
         } catch (SQLException e) {
             throw new RuntimeException("error to create new genre " + e.getMessage());
         }
+        return genre;
     }
 
     public Genre getGenreById(int id) {
@@ -74,6 +73,26 @@ public class GenreRepositoryImpl implements GenreRepository {
         return genres;
     }
 
+    public Genre getGenreByNameStrict(String name) {
+            String sql = "SELECT id, name FROM genres WHERE LOWER(name) = LOWER(?)";
+            Genre genre = null;
+            try (
+                    Connection connection = DBManager.getConnection(); PreparedStatement st = connection.prepareStatement(sql)) {
+
+                st.setString(1, name );
+
+                try (ResultSet rs = st.executeQuery()) {
+                    if(rs.next()) {
+                        genre = mapResultSetToGenre(rs);
+                    }
+                }
+
+            } catch (SQLException e) {
+                throw new RuntimeException("error to get the genre by name" + e.getMessage());
+            }
+            return genre;
+    }
+
     public List<Genre> getGenres() {
         String sql = "SELECT id, name FROM genres ORDER BY name";
         List<Genre> genreList = new ArrayList<>();
@@ -109,7 +128,6 @@ public class GenreRepositoryImpl implements GenreRepository {
         } catch (SQLException e) {
             throw new RuntimeException("error" + e.getMessage());
         }
-
     }
 
     public void deleteGenre(int id) {
@@ -126,7 +144,6 @@ public class GenreRepositoryImpl implements GenreRepository {
         } catch (SQLException e) {
             throw new RuntimeException("error in deleted action" + e.getMessage());
         }
-
     }
 
     private Genre mapResultSetToGenre(ResultSet rs) throws SQLException {

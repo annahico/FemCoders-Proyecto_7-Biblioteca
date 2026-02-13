@@ -1,14 +1,19 @@
 package com.library.views;
-
 import java.util.List;
 import java.util.Random;
-
 import com.library.controller.BookController;
 import com.library.model.Book;
 
 public class MainMenu {
-    private BookView bookView = new BookView();
-    private BookController controller;
+    private final BookView bookView = new BookView();
+    private final BookController controller;
+
+    public static final String RED = "\u001B[31m";
+    public static final String RESET = "\u001B[0m";
+    public static final String BLUE = "\u001B[34m";
+    public static final String LILA = "\u001B[35;3m";
+    public static final String ROSA = "\u001B[38;5;218m";
+    public static final String GREEN = "\u001B[32m";
 
     public MainMenu(BookController controller) {
         this.controller = controller;
@@ -33,26 +38,25 @@ public class MainMenu {
 
         while (option != 0) {
 
-            System.out.println("\u001B[34m===========================================");
+            System.out.println( BLUE + "===========================================");
             System.out.println("       WELCOME TO LIBRARY INVENTORY");
-            System.out.println("===========================================\u001B[0m");
+            System.out.println("===========================================" + RESET);
 
-            System.out.println("\u001B[35m\u001B[3m \"" + phrase + "\"\u001B[0m");
-            System.out.println("                \u001B[35m\u001B[3m" + author + "\u001B[0m");
-            System.out.println("\u001B[34m-------------------------------------------\u001B[0m");
+            System.out.println(LILA +  phrase  );
+            System.out.println("             " + author + RESET );
+            System.out.println(BLUE + "-------------------------------------------" + RESET);
 
             System.out.println("  1. Book List          5. Search Title");
             System.out.println("  2. Add Book           6. Search Author");
             System.out.println("  3. Edit Book          7. Search Genre");
             System.out.println("  4. Delete Book        0. Exit");
-            System.out.println("\u001B[34m===========================================\u001B[0m");
+            System.out.println(BLUE + "===========================================" + RESET);
 
             option = ConsoleUtils.readInt("Please Select an option: ", 0, 7);
 
             selected(option);
 
             System.out.println();
-
         }
     }
 
@@ -62,11 +66,14 @@ public class MainMenu {
                 System.out.println("Listing all books...");
                 List<Book> allBooks = controller.getAllBooks();
                 bookView.displayBooksBrief(allBooks);
+                System.out.println();
+                System.out.println(ROSA + "Scroll up to see the book list" + RESET);
+
             }
             case 2 -> {
                 Book newBook = bookView.getNewBookData();
                 controller.createBook(newBook);
-                System.out.println("Book saved successfully!");
+                System.out.println(GREEN + "Book saved successfully!" + RESET);
             }
             case 3 -> {
                 int id = bookView.askForBookId("Edit");
@@ -75,37 +82,40 @@ public class MainMenu {
                 if (BookToEdit != null) {
                     Book updatedBook = bookView.getEditBookData(BookToEdit);
                     controller.updateBook(updatedBook);
-                    System.out.println("Book updated successfully!");
+                    System.out.println(GREEN + "Book updated successfully!" + RESET);
                 } else {
-                    System.out.println("Book not found with ID: " + id);
+                    System.out.println( RED + "Book not found with ID: " + id + RESET);
                 }
-
-                System.out.println("Editing logic ready, waiting for service.findById()");
             }
             case 4 -> {
                 int id = bookView.askForBookId("Delete");
-                System.out.println("Processing deletion for ID: " + id);
-            }
+                Book bookToDelete = controller.findById(id);
+                boolean delete = bookView.confirmDeletion(bookToDelete.getTitle());
 
+                if(delete){
+                controller.deleteBook(id);
+                }
+            }
             case 5 -> {
                 String title = ConsoleUtils.stringInput("Enter Title to search: ", 200);
                 List<Book> results = controller.findByTitle(title);
                 bookView.searchBooks(results);
+                System.out.println("These are the results found from: " + title);
             }
             case 6 -> {
                 String author = ConsoleUtils.stringInput("Enter Author to search: ", 100);
                 List<Book> results = controller.findByAuthor(author);
                 bookView.searchBooks(results);
-                System.out.println("Searching for books by: " + author);
+                System.out.println("These are the results found from: " + author);
             }
             case 7 -> {
                 String genre = ConsoleUtils.stringInput("Enter Genre to search: ", 50);
                 List<Book> results = controller.findByGenre(genre);
                 bookView.displayBooksByGenre(results);
+                System.out.println("These are the results found from: " + genre);
             }
-
-            case 0 -> System.out.println("Exiting the system... Goodbye!");
-            default -> System.out.println("Invalid Option. Please try again.");
+            case 0 -> System.out.println(GREEN + "Exiting the system... Goodbye!" + RESET);
+            default -> System.out.println( RED + "Invalid Option. Please try again." + RESET );
         }
     }
 
