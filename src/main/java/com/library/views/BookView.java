@@ -134,7 +134,7 @@ public class BookView {
         String titleInput = ConsoleUtils.stringInputEdit("New Title [" + existingBook.getTitle() + "]: ", 200);
         String title = titleInput.isEmpty() ? existingBook.getTitle() : titleInput;
 
-        String authorInput = ConsoleUtils.stringInputEdit("New Author: ", 100);
+        String authorInput = ConsoleUtils.stringInputEdit("New Author [" + existingBook.getAuthors().get(0).getFullName() + "]: ", 100);
         List<Author> authors = authorInput.isEmpty()
                 ? existingBook.getAuthors()
                 : List.of(Author.builder().fullName(authorInput).build());
@@ -142,10 +142,10 @@ public class BookView {
         String isbnInput = ConsoleUtils.stringInputEdit("New ISBN [" + existingBook.getIsbn() + "]: ", 17,"^[0-9-]{10,17}$" );
         String isbn = isbnInput.isEmpty() ? existingBook.getIsbn() : isbnInput;
 
-        String descInput = ConsoleUtils.stringInputEdit("New Description: ", 200);
+        String descInput = ConsoleUtils.stringInputEdit("New Description [" + existingBook.getDescription() + "]: ", 200);
         String description = descInput.isEmpty() ? existingBook.getDescription() : descInput;
 
-        String genreInput = ConsoleUtils.stringInputEdit("New Genre: ", 50);
+        String genreInput = ConsoleUtils.stringInputEdit("New Genre [" + existingBook.getGenres().get(0).getName() + "]: ", 50);
         List<Genre> genres = genreInput.isEmpty()
                 ? existingBook.getGenres()
                 : List.of(Genre.builder().name(genreInput).build());
