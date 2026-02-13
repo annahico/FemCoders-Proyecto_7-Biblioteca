@@ -50,7 +50,7 @@ public class ConsoleUtils {
         if (!input.isEmpty() && input.length() <= maxLength) {
             return input;
         }
-        System.out.println("\u001B[31m Error: Cannot be empty or exceed" + maxLength + " characters.\u001B[0m");
+        System.out.println("\u001B[31m Error: Cannot be empty or exceed " + maxLength + " characters.\u001B[0m");
     }
 }
 
@@ -63,7 +63,7 @@ public class ConsoleUtils {
             if (!input.trim().isEmpty() && input.length() <= maxLength && input.matches(regex)) {
                 return input;
             }
-            System.out.println("\u001B[31m Error: Cannot be empty or exceed " + maxLength + " characters.\u001B[0m");
+            System.out.println("\u001B[31m Error: Must have 10 to 17 numbers or '-' and cannot be empty \u001B[0m");
         }
     }
 
@@ -73,10 +73,10 @@ public class ConsoleUtils {
             System.out.print(prompt);
             input = scanner.nextLine();
 
-            if (input.length() <= maxLength && input.matches(regex)) {
+            if (input.trim().isEmpty() || (input.length() <= maxLength && input.matches(regex)) ) {
                 return input;
             }
-            System.out.println("\u001B[31m Error: Cannot be exceed " + maxLength + " characters.\u001B[0m");
+            System.out.println("\u001B[31m Error: Must have 10 to 17 numbers or '-' .\u001B[0m");
         }
     }
 }
